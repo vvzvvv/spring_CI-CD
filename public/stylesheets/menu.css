@@ -1,0 +1,74 @@
+.menu {
+    position: absolute;
+    width: 100%;
+    top: 7.4rem;
+    padding: 2.7rem;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+}
+
+.menu-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 6.1rem;
+    width: 100%;
+}
+
+a {
+    font-style: Bold;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 2.8rem;
+
+    color: #595e56;
+    font-family: 'cafe24';
+}
+
+a:hover{
+    border-bottom: 1px dashed;
+    padding-bottom: 10px;
+}
+
+a:visited{
+    border-bottom: 1px dashed;
+    padding-bottom: 10px;
+}
+
+.board {
+    display: flex;
+    gap: 2.6rem;
+    align-items: center;
+}
+
+.test {
+    display: flex;
+    gap: 2.6rem;
+    align-items: center;
+}
+
+.prescription {
+    display: flex;
+    gap: 2.6rem;
+    align-items: center;
+}
+
+.sleep {
+    display: flex;
+    gap: 2.6rem;
+    align-items: center;
+}
+
+.exercise {
+    display: flex;
+    gap: 2.6rem;
+    align-items: center;
+}
+
+.diary {
+    display: flex;
+    gap: 2.6rem;
+    align-items: center;
+}

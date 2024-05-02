@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'worksans';
+  src: url('../fonts/WorkSans-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'worksans-italic';
+  src: url('../fonts/WorkSans-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'cafe24';
+  src: url('../fonts/Cafe24Ssurround-v2.0.ttf') format('truetype');
+}
+
+html {
+  font-size: 62.5%;
+}
