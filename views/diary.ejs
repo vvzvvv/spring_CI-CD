@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Spring</h1>
+            <nav>
+                <ul class="menu">
+                    <li><a href="#">게시판</a></li>
+                    <li><a href="#">테스트</a></li>
+                    <li><a href="#">복용약</a></li>
+                    <li><a href="#">수면</a></li>
+                    <li><a href="#">운동</a></li>
+                    <li><a href="#">일기</a></li>
+                </ul>
+                <div class="user-menu">
+                    <button class="user-button">로그아웃</button>
+                    <button class="user-button">회원 정보 수정</button>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <section class="diary-entry">
+                <div class="photo">
+                    <div class="photo-frame">
+                        <img id="photo-of-the-day" src="image_placeholder.jpg" alt="Photo of the day">
+                        <button class="photo-button" onclick="addPhoto()">+</button>
+                    </div>
+                </div>
+                <div class="entry">
+                    <label for="date">날짜:</label>
+                    <input type="date" id="date" name="date">
+                    <label for="weather">날씨:</label>
+                    <input type="text" id="weather" name="weather" placeholder="오늘의 날씨">
+                    <textarea id="diary-text" placeholder="여기에 일기를 작성하세요..."></textarea>
+                    <div class="buttons">
+                        <button class="view-all-button">일기 전체보기</button>
+                        <button class="save-button">저장하기</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="all-entries" class="all-entries">
+            <header>
+                <h2>2024년 4월</h2>
+            </header>
+            <section class="calendar">
+                <input type="date" id="entry-date" name="entry-date">
+                <button onclick="viewEntry()">보기</button>
+            </section>
+            <section id="previous-entry" class="previous-entry">
+                <div class="photo">
+                    <img src="previous_image.jpg" alt="Previous entry photo">
+                </div>
+                <div class="entry">
+                    <p>선택된 날짜의 일기가 여기에 표시됩니다...</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
