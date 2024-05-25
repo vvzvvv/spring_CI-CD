@@ -5,7 +5,9 @@ module.exports = (sequelize, Sequelize) => {
     createdAt: 작성날짜(timestamps가 자동으로 생성)
     weather: 날씨
     photo: 사진
-    user_id: 회원 ID
+    user_id: 회원 ID(FK)
+
+    외래키 필드는 시퀄라이즈가 생성
     */
     const Diary = sequelize.define("diary", {
         diary_id: {
@@ -25,10 +27,6 @@ module.exports = (sequelize, Sequelize) => {
         photo: {                    // 이미지 저장을 위한 DATATYPE 알아봐야 함
             type: Sequelize.STRING.BINARY,  
             allowNull: true
-        },
-        user_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false
         }
     },
 

@@ -6,7 +6,9 @@ module.exports = (sequelize, Sequelize) => {
     sleep_duration: 수면 시간
     start_sleep_time: 취침 시간
     end_sleep_time: 기상 시간
-    user_id: 회원 ID
+    user_id: 회원 ID(FK)
+
+    외래키 필드는 시퀄라이즈가 생성
     */
     const SleepReport = sequelize.define("sleep_report", {
         sleep_report_id: {
@@ -34,10 +36,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         end_sleep_time: {
             type: Sequelize.DATEONLY,
-            allowNull: false
-        },
-        user_id: {
-            type: Sequelize.INTEGER,
             allowNull: false
         }
     },

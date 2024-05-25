@@ -21,16 +21,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
     },
-    {timestamps: false}
+        {timestamps: false}
     );
-
-    // 연관관계 설정
-    User.associate = function(models) {
-        User.hasMany(models.post, {
-            foreignKey: 'user_id',
-            as: 'user_id'
-        });
-    };
-
     return User;
 }
