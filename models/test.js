@@ -4,7 +4,9 @@ module.exports = (sequelize, Sequelize) => {
     result: 선택지 결과
     test_date: 테스트 일자
     total_score: 총점
-    user_id: 회원 ID
+    user_id: 회원 ID(FK)
+
+    외래키 필드는 시퀄라이즈가 생성
     */
     const Test = sequelize.define("test", {
         test_id: {
@@ -25,10 +27,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             // check constraint 추가해주어야함
-        },
-        user_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false
         }
     },
 

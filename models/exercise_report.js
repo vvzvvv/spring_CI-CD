@@ -6,7 +6,9 @@ module.exports = (sequelize, Sequelize) => {
     end_exercise_time: 운동 종료시간
     exercise_type: 운동 종류
     exercise_rate: 오늘 운동 평가
-    user_id: 회원 ID
+    user_id: 회원 ID(FK)
+
+    외래키 필드는 시퀄라이즈가 생성
     */
     const ExerciseReport = sequelize.define("exercise_report", {
         exercise_report_id: {
@@ -35,10 +37,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: true
             // check constraint 추가해주어야함
-        },
-        user_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false
         }
     },
 

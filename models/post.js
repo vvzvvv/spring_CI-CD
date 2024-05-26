@@ -6,7 +6,9 @@ module.exports = (sequelize, Sequelize) => {
     created_At: 작성날짜
     title: 제목
     contents: 내용
-    user_id: 회원 ID
+    user_id: 회원 ID(FK)
+
+    외래키 필드는 시퀄라이즈가 생성
     */
     const Post = sequelize.define("post", {
         post_id: {
@@ -21,10 +23,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         contents: {
             type: Sequelize.STRING,
-            allowNull: false
-        },
-        user_id: {
-            type: Sequelize.INTEGER,
             allowNull: false
         }
     },
