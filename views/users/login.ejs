@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<link href="/stylesheets/users/user.css" rel="stylesheet">
+  <head>
+    <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %>
+  </head>
+  
+  <body class = "user-background">
+    <!-- <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %> -->
+    
+
+    <div class = "user">
+
+        <img class = "logo" src="/images/spring_user_logo.png">
+        
+        <form class = "form" action="/users/login" method="post">
+            
+            <div>
+                <div class = "text">
+                    <b>아이디</b>
+                </div>
+                <input type = "text" name="email" value="">
+            </div>
+            <br>
+            <br>
+
+            <div>
+                <div class = "text">
+                    <b>비밀번호</b>
+                </div>
+                <input type = "password" name = "password" value="">
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div>
+                <input class="button" type="submit" value="로그인">
+            </div>
+            
+            <br>
+
+            <div class = "member-footer">
+                <div>
+                    <a href="/users/emailVerification" class = "user-link" >비밀번호 찾기</a>
+                    <a href="/users/join"
+                    class = "user-link">회원가입</a>
+                </div>
+            </div>
+        </form>
+    </div>
+  </body>
+</html>
