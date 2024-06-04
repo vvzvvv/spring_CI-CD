@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<link href="/stylesheets/users/user.css" rel="stylesheet">
+  <head>
+    <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %>
+  </head>
+
+  <body class = "user-background">
+
+    <div class = "user">
+        <img class = "logo" src="/images/spring_user_logo.png">
+
+        <form class = "form" action="/users/emailVerification" method="post">
+            <div>
+              <div class = "text">
+                <b>이메일</b>
+              </div>
+
+              <div class = "email-form-inline">
+                <input type = "text" name = "email" value="">
+              </div>
+
+              <div class = "button-form-inline">
+                <input type = "submit" value = "전송">
+              </div>
+
+            </div>
+            <br>
+            <br>
+
+            <div>
+              <div class = "text">
+                <b>인증번호</b>
+              </div>
+              <input type = "text" name = "code" value="">
+            </div>
+            <br>
+            <br>
+
+            <div>
+              <input class="button" type="submit" value="인증하기">
+            </div>
+
+        </form>
+    </div>
+  </body>
+</html>
