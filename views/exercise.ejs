@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서구실 운동 페이지</title>
+    <link rel="stylesheet" href="/stylesheets/exercise.css"> <!-- 내 스타일시트 파일 경로 -->
+    <link rel="stylesheet" href="/stylesheets/menu.css"> <!-- 메뉴 스타일시트 -->
+    <%-include('header.ejs') %>
+    <%-include('menu.ejs') %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="north">
+        <div class="north-content">
+          <input id="but1" type="button" name="yes" value="전" onclick="previousDay()">
+          <input id="but2" type="button" name="tody" value="" disabled>
+          <input id="but3" type="button" name="tom" value="후" onclick="nextDay()">
+          <input type="date" id="datePicker">
+        </div>
+    </div>
+
+    <div class="centers">
+      <div class="center1">
+        <canvas id="exerciseChart" width="800" height="200"></canvas>
+      </div>
+
+      <div class="center2">
+        <form onsubmit="addExercise(event)">
+        운동 : <input type="text" name="exercise" size="17">
+        <select name="shour">
+          <option value="00h">00시</option>
+          <option value="01h">01시</option>
+          <option value="02h">02시</option>
+          <option value="03h">03시</option>
+          <option value="04h">04시</option>
+          <option value="05h">05시</option>
+          <option value="06h">06시</option>
+          <option value="07h">07시</option>
+          <option value="08h">08시</option>
+          <option value="09h">09시</option>
+          <option value="10h">10시</option>
+          <option value="11h">11시</option>
+          <option value="12h">12시</option>
+          <option value="13h">13시</option>
+          <option value="14h">14시</option>
+          <option value="15h">15시</option>
+          <option value="16h">16시</option>
+          <option value="17h">17시</option>
+          <option value="18h">18시</option>
+          <option value="19h">19시</option>
+          <option value="20h">20시</option>
+          <option value="21h">21시</option>
+          <option value="22h">22시</option>
+          <option value="23h">23시</option>
+        </select>      
+        <select name="sminute">
+          <option value="00m">00분</option>
+          <option value="10m">10분</option>
+          <option value="20m">20분</option>
+          <option value="30m">30분</option>
+          <option value="40m">40분</option>
+          <option value="50m">50분</option>
+        </select><br><br>
+        <select name="fhour">
+          <option value="00h">00시</option>
+          <option value="01h">01시</option>
+          <option value="02h">02시</option>
+          <option value="03h">03시</option>
+          <option value="04h">04시</option>
+          <option value="05h">05시</option>
+          <option value="06h">06시</option>
+          <option value="07h">07시</option>
+          <option value="08h">08시</option>
+          <option value="09h">09시</option>
+          <option value="10h">10시</option>
+          <option value="11h">11시</option>
+          <option value="12h">12시</option>
+          <option value="13h">13시</option>
+          <option value="14h">14시</option>
+          <option value="15h">15시</option>
+          <option value="16h">16시</option>
+          <option value="17h">17시</option>
+          <option value="18h">18시</option>
+          <option value="19h">19시</option>
+          <option value="20h">20시</option>
+          <option value="21h">21시</option>
+          <option value="22h">22시</option>
+          <option value="23h">23시</option>
+        </select>      
+        <select name="fminute">
+          <option value="00m">00분</option>
+          <option value="10m">10분</option>
+          <option value="20m">20분</option>
+          <option value="30m">30분</option>
+          <option value="40m">40분</option>
+          <option value="50m">50분</option>
+        </select><br>
+        <input type="submit" class="tsubmitbut">
+      </form>
+      </div>
+    </div>
+
+    <div class="souths">
+      <div class="southleft">
+        <table class="calendar" id="calendar">
+          <thead>
+            <tr>
+              <th>일</th>
+              <th>월</th>
+              <th>화</th>
+              <th>수</th>
+              <th>목</th>
+              <th>금</th>
+              <th>토</th>
+            </tr>
+          </thead>
+          <tbody id="calendar-body">
+            <!-- 달력 날짜가 여기 표시됨 -->
+          </tbody>
+        </table>
+      </div>
+      <div class="south">
+        <table border="1" width="1200px">
+          <tr>
+            <th colspan="2">오늘의 운동 평가</th>
+          </tr>
+          <tr>
+            <td rowspan="2">
+              <input type="checkbox" name="star" id="star1">
+              <label for="star1" class="star-label"></label>
+              <input type="checkbox" name="star" id="star2">
+              <label for="star2" class="star-label"></label>
+              <input type="checkbox" name="star" id="star3">
+              <label for="star3" class="star-label"></label>
+              <input type="checkbox" name="star" id="star4">
+              <label for="star4" class="star-label"></label>
+              <input type="checkbox" name="star" id="star5">
+              <label for="star5" class="star-label"></label>
+            </td>
+            <td>
+              <textarea value="오늘의 운동은 어땠나요?"></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    
+      <script> 
+      // 초기 로딩 시 현재 날짜 표시
+      updateCurrentDate();
+      // 하루 전 버튼 클릭 시
+      function previousDay() {
+        changeDate(-1);
+      }
+      // 하루 후 버튼 클릭 시
+      function nextDay() {
+        changeDate(1);
+      }
+      // 날짜 변경 함수
+      function changeDate(days) {
+        const currentDate = document.getElementById('but2').value;
+        let newDate = new Date(currentDate);
+        newDate.setDate(newDate.getDate() + days);
+        document.getElementById('but2').value = formatDate(newDate);
+      }
+
+      // 페이지 로드 시 초기 설정
+    document.addEventListener('DOMContentLoaded', function() {
+    // 현재 날짜 표시
+    updateCurrentDate();
+    // 날짜 선택 요소 클릭 시 이벤트 핸들러 연결
+    document.getElementById('datePicker').addEventListener('click', function() {
+      // 달력에서 날짜를 선택하면 해당 날짜로 변경
+      this.addEventListener('change', function() {
+        const selectedDate = new Date(this.value);
+        document.getElementById('but2').value = formatDate(selectedDate);
+      });
+      
+    });
+  });
+      // 날짜 형식을 YYYY.MM.DD로 변환하는 함수
+      function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}.${month}.${day}`;
+      }
+      // 현재 날짜를 표시하는 함수
+      function updateCurrentDate() {
+        const today = new Date();
+        document.getElementById('but2').value = formatDate(today);
+      }
+
+      // 왼쪽 아래 캘린더
+      document.addEventListener('DOMContentLoaded', function() {
+        generateCalendar(new Date());
+      });
+
+      function generateCalendar(date) {
+        const calendarBody = document.getElementById('calendar-body');
+        calendarBody.innerHTML = '';
+
+        const year = date.getFullYear();
+        const month = date.getMonth();
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let dateCounter = 1;
+        for (let i = 0; i < 6; i++) { // weeks
+          const row = document.createElement('tr');
+
+          for (let j = 0; j < 7; j++) { // days
+            const cell = document.createElement('td');
+            if (i === 0 && j < firstDay || dateCounter > daysInMonth) {
+              cell.innerHTML = '';
+            } else {
+              cell.innerHTML = dateCounter;
+              if (dateCounter === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) {
+                cell.classList.add('today');
+              }
+              dateCounter++;
+            }
+            row.appendChild(cell);
+          }
+          calendarBody.appendChild(row);
+        }
+      }
+      // 별 클릭시 색깔 바꾸기
+        const starLabels = document.querySelectorAll('.star-label');
+        starLabels.forEach((label) => {
+          label.addEventListener('click', () => {
+            const checkbox = document.getElementById(label.htmlFor);
+            if (checkbox.checked) {
+              label.style.backgroundImage = "url('/images/blackstar.png')";
+              checkbox.checked = false;
+            } else {
+              label.style.backgroundImage = "url('/images/yellowstar.png')";
+              checkbox.checked = true;
+            }
+          });
+        });
+
+  // 차트 초기화
+  const ctx = document.getElementById('exerciseChart').getContext('2d');
+  const exerciseChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({ length: 24 }, (_, i) => `${i}시`), // 0시부터 23시까지 라벨
+      datasets: []
+    },
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: '시간'
+          },
+          ticks: {
+            autoSkip: false,
+            maxRotation: 90,
+            minRotation: 90
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: '운동 시간 (분)'
+          },
+          beginAtZero: true,
+          min: 0,
+          ticks: {
+            stepSize: 30 // y축 눈금을 30분 단위로 설정
+          }
+        }
+      }
+    }
+  });
+  // 오른쪽 위 운동시간 입력
+  function addExercise(event) {
+    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+
+    const exercise = event.target.exercise.value;
+    const shour = parseInt(event.target.shour.value);
+    const sminute = parseInt(event.target.sminute.value);
+    const fhour = parseInt(event.target.fhour.value);
+    const fminute = parseInt(event.target.fminute.value);
+
+    // 운동 시간을 분 단위로 계산
+    const startMinutes = shour * 60 + sminute;
+    const endMinutes = fhour * 60 + fminute;
+    const durationMinutes = endMinutes - startMinutes;
+
+    // 차트 데이터에 추가
+    exerciseChart.data.datasets.push({
+      label: exercise,
+      data: Array.from({ length: 24 }, (_, i) => (i === shour ? durationMinutes : 0)), // 시작 시간에만 값 추가
+      borderColor: getRandomColor(),
+      fill: false
+    });
+
+    exerciseChart.update(); // 차트 업데이트
+
+    // 폼 초기화
+    event.target.reset();
+  }
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
+    </script>
+  </body>
+</html>

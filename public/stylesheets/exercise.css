@@ -1,0 +1,159 @@
+.north {
+  width : 750px; height: 80px;
+  margin : 350px auto 60px 1300px;
+  background: rgb(255, 255, 255); 
+}
+
+.north-content {
+  position:inherit;
+  left:200px;
+}
+
+.north-content input[type="button"],
+.north-content input[type="date"] {
+  font-size: 30px; 
+}
+
+#but1, #but3 {
+  background : #e9ebb2ae;
+}
+
+#but1, #but3 {
+  width: 100px;
+  height: 50px;
+}
+
+#but2 {
+  width: 200px;
+  height: 53px;
+}
+
+.centers {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin : 100px;
+}
+.center1 {
+  border-style : outset;
+  background-color: #FAFAFA;
+  width : 2000px; height : 500px;
+  padding : 30px;
+  border-radius: 40px;
+  margin : 0 20px 20px 160px;
+}
+.center2 {
+  border-style :outset;
+  background-color: #FAFAFA;
+  width : 400px; height : 400px;
+  padding: 80px; 
+  border-radius: 40px;
+}
+
+input[type="text"] {
+  height : 50px;
+  font-size: 30px;
+}
+
+form {
+  width : 100%;
+  padding: 15px;
+  font-size: 40px;
+}
+
+.tsubmitbut {
+  font-size: 26px;
+  margin: 25px auto;
+  display: block;
+}
+
+select {
+  width: 156px;
+  padding: 9px;
+  font-size: 24px;
+}
+
+.souths {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin : 100px;
+}
+.southleft {
+  border-style :outset;
+  background-color: #FAFAFA;
+  width : 600px; height : 400px;
+  padding: 80px; 
+  margin:25px  20px 0 180px;
+  border-radius: 40px;
+}
+
+.south {
+  border-style:unset;
+  background-color: #b6c7b54b;
+  width : 640px; height : 430px;
+  padding: 60px 600px;
+  margin : 30px 0 0 20px;
+  border-radius: 40px;
+}
+.south table {
+  margin:30px -260px;
+}
+
+textarea {
+  background-color: rgba(236, 237, 224, 0.695);
+  width:500px; height:300px;
+  font-size: 40px;
+}
+
+ .calendar {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.calendar th, .calendar td {
+  border: 1px solid #1c1d111d;
+  width: 14%;
+  height: 57px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px; font-style: italic; 
+}
+
+.calendar th {
+  background-color: #32373229;
+  color: white;
+}
+
+.calendar td {
+  background-color: #f0f1eb;
+}
+
+.calendar .today {
+  background-color: #e6f5a5;
+}
+.south th {
+  font-size: 40px;
+} */
+
+.south td {
+  font-size: 30px;
+  background-color : #d0da22;
+} 
+
+.star-label {
+  display: inline-block;
+      width: 100px;
+      height: 100px;
+      background-image: url('/images/blackstar.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+}
+
+
+/* 별 누르면 사실 옆에 체크박스 있음 */
+input[type="checkbox"] {
+      display: none;
+  }
