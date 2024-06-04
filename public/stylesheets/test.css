@@ -1,0 +1,254 @@
+.test-page{
+    position: relative;
+    top:23.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2.8rem;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.test-list{
+    position: relative;
+    top: 4.5rem;
+    padding: 2.5rem 2.3rem;
+    background: #F7F7F7;
+    width: 20%;
+    height: 74.4rem;
+    border-radius: 2rem;
+    border: 0.2rem solid #E3E2E2;
+    overflow: scroll;
+}
+
+.test-name{
+    font-style: ExtraBold;
+    font-weight: 700;
+    font-size: 2.6rem;
+    color: #393939;
+    position: relative;
+    left: 1rem;
+}
+
+table{ 
+    border-collapse: collapse; 
+    width: 100%;
+}
+
+th{
+    text-align: center;
+    font-style: ExtraBold;
+    font-weight: 700;
+    font-size: 2.6rem;
+    width: 50%;
+    height: 6.2rem;
+    color: #393939;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    vertical-align: middle; 
+}
+
+tr{
+    text-align: center;
+    font-style: Regular;
+    font-size: 2.2rem;
+    width: 50%;
+    height: 6.2rem;
+    color: #7B7B7B;
+    border-bottom: 1px solid #B8ACAC;
+    vertical-align: middle; 
+}
+
+.test-content{
+    overflow: auto;
+    width: 70%;
+    height: 100%;
+}
+
+.test-date{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    font-style: Regular;
+    font-size: 2.2rem;
+    color: #7B7B7B;
+}
+
+.test-div{
+    position: absolute;
+    padding: 2.5rem 4.9rem;
+    background: #F7F7F7;
+    width: 68%;
+    height: 56.4rem;
+    border-radius: 2rem;
+    border: 0.2rem solid #E3E2E2;
+    overflow: scroll;
+}
+
+.test-header{
+    font-weight: 700;
+}
+
+.highlight{
+    font-style: ExtraBold;
+    font-size: 2.4rem;
+    color: #CB7C7C;
+}
+
+.no-highlight{
+    font-style: ExtraBold;
+    font-size: 2.4rem;
+    color: #000000;
+}
+
+.test-question-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.question{
+    font-style: SemiBold;
+    font-size: 2.2rem;
+    color: #000000;
+    margin-bottom: 0rem;
+}
+
+.question-choice{
+    font-style: Medium;
+    font-size: 1.8rem;
+    color: #000000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3rem;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+input{
+    width:1.7rem;
+    height: 1.7rem;
+    margin: 0rem;
+}
+
+input:checked{
+    appearance: none;
+    background-color: #DBE6D9;
+    margin: 0rem;
+    border-radius: 50%;
+    border: 0.1rem solid #000000;
+}
+
+.select1{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.select2{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.select3{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.select4{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.test-submit{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    top:68rem;
+    justify-content: flex-end;
+    align-items: center;
+    width: 70%;
+    gap: 1.6rem;
+}
+
+.test-score{
+    display: flex;
+    flex-direction: row;
+    gap:0.2rem;
+}
+
+.score-label{
+    font-style: Medium;
+    font-size: 2.8rem;
+    color: #000000;
+}
+
+.score-describe{
+    font-style: ExtraBold;
+    font-size: 2.8rem;
+    color: #000000;
+}
+
+.submit-button{
+    width: 17.1rem;
+    height: 4.7rem;
+    background-color: #DBE6D9;
+    border-radius: 1rem;
+    border: 0rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.test-result{
+    position: absolute;;
+    top: 72rem;
+    display: flex;
+    flex-direction: column;
+    gap:1.4rem;
+    margin-left: 1.4rem;
+    width: 70%;
+}
+
+.result-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:4.1rem;
+    margin-left: 0.2rem;
+}
+
+.result-header{
+    font-style: Medium;
+    font-size: 2.4rem;
+    color: #2B2B2B;
+}
+
+.result-title{
+    width: 15rem;
+    font-style: ExtraBold;
+    font-size: 2.4rem;
+    color: #2B2B2B;
+    border-bottom: 0.4rem solid #628662;
+    display: flex;
+    justify-content: center;
+    margin:0rem;
+    align-items: baseline;
+}
+
+.result-content{
+    font-style: Medium;
+    font-size: 2.4rem;
+    color: #2B2B2B;
+}
