@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var diaryRouter = require('./routes/diary/index'); //다이어리 라우터 설정
 
 var app = express();
 
