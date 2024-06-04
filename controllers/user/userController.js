@@ -1,4 +1,4 @@
-const db = require("../models/index"),
+const db = require("../../models/index"),
     // userService = require("../services/userService"),
     User = db.user,
 
