@@ -30,8 +30,9 @@ module.exports = (sequelize, Sequelize) => {
         }
     },
 
-    {timestamps: false},
+        {timestamps: false},
 
     );
-    return Test;
+
+    return Test; 
 }
