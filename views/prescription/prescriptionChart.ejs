@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<canvas class="chart" id="line-chart"></canvas>
+
+<script>
+    new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    data: {
+        labels: [2024.01, 2024.02, 2024.03, 2024.04, 2024.05, 2024.06],
+        datasets: [{ 
+            data: [5,4,3,4,3,2],
+            label: "빨간약",
+            fill: false,
+            borderColor: 'rgba(201, 52, 172, 1)',
+            pointRadius: 8
+        }, { 
+            data: [3,3,5,6,7,5],
+            label: "파란약",
+            borderColor: 'rgba(75, 192, 192, 1)',
+            fill: false,
+            pointRadius: 8
+        }
+        ]
+    },
+    options: {
+        responsive: false, //사이즈 적용
+        title: {
+        display: true,
+        text: '복용량 변화 그래프'
+        },
+        scales: {
+            xAxes: [{
+                ticks:{
+                    fontSize: 20
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    min: 0,
+                    max: 8,
+                    fontSize : 17
+                }
+            }]
+		},
+        element: {
+            pointRadius: 10
+        }  
+    }
+    });
+
+
+
+</script>
