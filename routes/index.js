@@ -5,5 +5,10 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+
+router.use('/diary',require('./diary'));
 router.use('/test',require('./test'));
+router.use('/sleep',require('./sleep'));
+
 module.exports = router;

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<div class="section-prescription">
+    <div class="prescription-title">
+        <h1>처방약 기록</h1>
+        <button onclick="openPopup()">처방약 추가</button>
+    </div>
+
+
+    <!-- <div class="prescription-list" id="prescription-list"> -->
+    <div class="prescription-list">
+        <div class="prescription-list-content">
+            <div class="prescription-object">
+                <h1>빨간약</h1>
+                <hr>
+                <div>
+                    <p><b>처방 일자</b></p>
+                    <p>2024-03-05</p>
+                </div>
+                <div>
+                    <p><b>현재 복용량</b></p>
+                    <p>5 mg</p>
+                </div>
+            </div>
+
+            <div class="prescription-object">
+                <h1>파란약</h1>
+                <hr>
+                <div>
+                    <p><b>처방 일자</b></p>
+                    <p>2024-03-05</p>
+                </div>
+                <div>
+                    <p><b>현재 복용량</b></p>
+                    <p>5 mg</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="popup" class="popup-prescription">
+        <div class="prescription-form" id="prescription-list">
+           
+            <h3>처방약 추가</h3>
+            <form onsubmit="return addPrescription()">
+                <input type="text" id="prescription-name" placeholder="처방약 이름" required>
+                <input type="date" id="prescription-date" placeholder="처방 날짜" required>
+                <input type="text" id="prescription-dosage" placeholder="처방 용량" required>mg
+                <button type="submit" class="add-button">추가</button>
+                <!-- <button class="add-button" onclick="addPrescription()">추가</button> -->
+                <span class="close-btn" onclick="closePopup()">닫기</span>
+            </form>
+        </div>
+    <!-- <button class="add-button" onclick="addPrescription()">+ 추가</button> -->
+    </div>
+    <!-- <button onclick="removeRecord(this)">-</button> -->
+
+
+</div>
+
+<script>
+    function openPopup() {
+		var popup = document.getElementById("popup");
+		popup.style.visibility = "visible";
+		popup.style.opacity = "1";
+	}
+
+	function closePopup() {
+		var popup = document.getElementById("popup");
+		popup.style.visibility = "hidden";
+		popup.style.opacity = "0";
+	}
+
+    // 고치기전
+    // function addPrescription() {
+    //     const name = document.getElementById('prescription-name').value;
+    //     const date = document.getElementById('prescription-date').value;
+    //     const dosage = document.getElementById('prescription-dosage').value;
+
+    //     const list = document.getElementById('prescription-list');
+    //     const newItem = document.createElement('div');
+    //     const prescriptionName = document.createElement('span');
+    //     prescriptionName.textContent = `약 이름: ${name} `;
+    //     const prescriptionDate = document.createElement('span');
+    //     prescriptionDate.textContent = `처방 날짜: ${date} `;
+    //     const prescriptionDosage = document.createElement('span');
+    //     prescriptionDosage.textContent = `용량: ${dosage}mg `;
+    //     const removeButton = document.createElement('button');
+    //     removeButton.textContent = '-';
+    //     removeButton.onclick = function() {
+    //         removeRecord(removeButton);
+    //         updatePrescriptionOptions();
+    //     };
+
+    //     newItem.appendChild(prescriptionName);
+    //     newItem.appendChild(prescriptionDate);
+    //     newItem.appendChild(prescriptionDosage);
+    //     newItem.appendChild(removeButton);
+    //     list.appendChild(newItem);
+
+    //     updatePrescriptionOptions();
+    //     closePopup();
+    //     return false; // 폼 제출 방지
+    // }
+
+
+    //챗지피티 제안
+    function addPrescription() { 
+        const name = document.getElementById('prescription-name').value;
+        const date = document.getElementById('prescription-date').value;
+        const dosage = document.getElementById('prescription-dosage').value;
+
+        const list = document.querySelector('.prescription-list-content'); // 수정된 부분
+        const newItem = document.createElement('div'); // 수정된 부분
+        newItem.className = 'prescription-object'; // 수정된 부분
+
+        const prescriptionName = document.createElement('h1');
+        prescriptionName.textContent = name;
+
+        const hr = document.createElement('hr');
+
+        const dateDiv = document.createElement('div');
+        const dateLabel = document.createElement('p');
+        dateLabel.innerHTML = '<b>처방 일자</b>';
+        const dateText = document.createElement('p');
+        dateText.textContent = date;
+        dateDiv.appendChild(dateLabel);
+        dateDiv.appendChild(dateText);
+
+        const dosageDiv = document.createElement('div');
+        const dosageLabel = document.createElement('p');
+        dosageLabel.innerHTML = '<b>현재 복용량</b>';
+        const dosageText = document.createElement('p');
+        dosageText.textContent = `${dosage} mg`;
+        dosageDiv.appendChild(dosageLabel);
+        dosageDiv.appendChild(dosageText);
+
+        newItem.appendChild(prescriptionName);
+        newItem.appendChild(hr);
+        newItem.appendChild(dateDiv);
+        newItem.appendChild(dosageDiv);
+
+        list.appendChild(newItem);
+
+        closePopup();
+        return false; // 폼 제출 방지
+    }
+    
+    function removeRecord(button) {
+            const item = button.parentElement;
+            item.remove();
+            updatePrescriptionOptions();
+        }
+
+</script>
