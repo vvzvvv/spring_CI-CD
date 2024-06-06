@@ -4,7 +4,8 @@ const {getTestList} = require("../../models/testQuery");
 
 module.exports = async (req, res) => {
     try {
-        const result = await getTestList();
+        const userID = 1;
+        const result = await getTestList(userID);
         let testList = [];
         for(var test of result){   
             testList.push(test.get(0));

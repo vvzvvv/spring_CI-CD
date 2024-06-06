@@ -41,7 +41,6 @@
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementsByClassName("test-date")[0].innerHTML = todayString;
         var form = document.querySelector('.test-question-form');
-
         form.addEventListener('submit', function(event) {
             event.preventDefault();  // 기본 폼 제출 동작을 막음
 
@@ -63,19 +62,31 @@
                 resultString: resultString
             };
 
-            fetch('/test', { 
+            const row = fetch('/test', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dataToSend)
             })
-            .then(response => response.json())
+            .then(result => result.json())
             .then(data => {
                 console.log('Success:', data);
+                if(data.status == 'fail'){
+                    window.location.href = `/test/${data.data.test_id}`;
+                    window.alert("오늘 이미 테스트를 진행했습니다. \n오늘 작성한 테스트 결과를 확인하세요!");
+                }
+                else{
+                    return data;
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
+            });
+
+            row.then((data) => {
+                console.log('Response in final then:', data.data);
+                window.location.href = `/test/${data.data.test_id}`;
             });
 
             let resultData;
@@ -87,6 +98,10 @@
 
             document.getElementsByClassName("result-title")[0].innerHTML = resultData.title;
             document.getElementsByClassName("result-content")[0].innerHTML = resultData.resultContent;
+
+            // location.href = `/test/${resultData.test_id}
+            // location.reload();
+            // console.log(location.href);
         });
     });
 </script>
