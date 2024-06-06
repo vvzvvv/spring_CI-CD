@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수면 기록 페이지</title>
+    <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <style>  
+        body {
+            margin-top: -10rem;
+            margin-left: 0rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'WorkSansItalic';
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            margin-top: 20px;
+            align-items: flex-start; /* 자식 요소들이 동일한 높이에서 시작하도록 설정 */
+        }
+        .section {
+            width: 48%;
+        }
+        .section h2 {
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .date-selector {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        .date-selector button {
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .date-selector span {
+            margin: 0 15px;
+            font-size: 1.2em;
+        }
+        .sleep-time, .wake-time, .sleep-quality {
+            margin-bottom: 20px;
+        }
+        .time-input, .date-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #d0d0d0;
+            text-align: center;
+            font-size: 1.4em; 
+        }
+        .summary {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            margin-top: 20px; 
+            width: 100%;
+            height: 100px;
+            display: flex; /* flexbox 사용 */
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+        
+        }
+        canvas {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 82px; 
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            height: 20px;
+            cursor: pointer;
+            box-shadow: inset 0 0 0 1px #d0d0d0, inset 20% 0 0 0 #d0d0d0, inset 40% 0 0 0 #d0d0d0, inset 60% 0 0 0 #d0d0d0, inset 80% 0 0 0 #d0d0d0;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 10%;
+            background-color: #e0e0e0;
+            border-radius: 20px 0 0 20px;
+            transition: width 0.25s, background-color 0.25s;
+        }
+        .progress-bar.gradient {
+            background: linear-gradient(to right, 
+                rgba(139, 149, 255, 0.1) 0%, rgba(139, 149, 255, 0.25) 20%, 
+                rgba(139, 149, 255, 0.4) 40%, rgba(139, 149, 255, 0.55) 60%, 
+                rgba(139, 149, 255, 0.7) 80%, rgba(139, 149, 255, 0.85) 100%);
+        }
+        .handle {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(139, 149, 255, 1);
+            position: absolute;
+            top: 0;
+            right: -10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+        }
+        .box {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            flex-grow: 1; /* Flexbox 레이아웃에서 남는 공간을 차지하도록 설정 */
+        }
+    </style>
+</head>
+<body>
+    <canvas class="chart" id="line-chart"></canvas>
+    <div class="date-selector">
+        <button id="prev-day">&lt;</button>
+        <span id="current-date"><%= currentDate %></span>
+        <button id="next-day">&gt;</button>
+    </div>
+    <div class="container">
+        <div class="section">
+            <div class="box">
+                <h2>어제의 취침시간은 언제였나요?</h2>
+                <div class="sleep-time">
+                    <input type="date" id="bedtime-date" class="date-input" max="<%= new Date().toISOString().split('T')[0] %>">
+                    <input type="time" id="bedtime-time" class="time-input" min="00:00" max="23:59">
+                </div>
+            </div>
+            <div class="box">
+                <h2>오늘의 기상시간은 언제였나요?</h2>
+                <div class="wake-time">
+                    <input type="date" id="waketime-date" class="date-input" max="<%= new Date().toISOString().split('T')[0] %>">
+                    <input type="time" id="waketime-time" class="time-input" min="00:00" max="23:59">
+                </div>
+            </div>
+            <div class="box">
+                <h2>어제 수면은 어떠셨나요?</h2>
+                <div class="sleep-quality">
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="handle" id="handle"></div>
+                        </div>
+                    </div>
+                    <p>현재 평가: <span id="rating">0</span> / 5</p>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <canvas id="sleepChart"></canvas>
+            <div class="summary" id="total-sleep-time">
+                총 수면시간은 0 시간 0 분 입니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const handle = document.getElementById('handle');
+        const ratingDisplay = document.getElementById('rating');
+
+        const updateProgress = (event) => {
+            progressBar.classList.add('gradient');
+            handle.style.display = 'block';
+            const rect = progressContainer.getBoundingClientRect();
+            const offsetX = event.clientX - rect.left;
+            const width = Math.max(0, Math.min(offsetX, rect.width));
+            const percentage = (width / rect.width) * 100;
+            const steps = Math.round((percentage / 100) * 5);
+            progressBar.style.width = `${(steps / 5) * 100}%`;
+            ratingDisplay.textContent = steps;
+            localStorage.setItem('userRating', steps);
+        };
+
+        handle.addEventListener('mousedown', () => {
+            document.addEventListener('mousemove', updateProgress);
+        });
+
+        document.addEventListener('mouseup', () => {
+            document.removeEventListener('mousemove', updateProgress);
+        });
+
+        progressContainer.addEventListener('click', (event) => {
+            updateProgress(event);
+        });
+
+        const savedRating = localStorage.getItem('userRating');
+        if (savedRating !== null) {
+            progressBar.classList.add('gradient');
+            handle.style.display = 'block';
+            const savedPercentage = (savedRating / 5) * 100;
+            progressBar.style.width = `${savedPercentage}%`;
+            ratingDisplay.textContent = savedRating;
+        }
+
+        const currentDateElement = document.getElementById('current-date');
+        let currentDate = new Date();
+        const today = new Date();
+
+        const updateDate = (offset) => {
+            currentDate.setDate(currentDate.getDate() + offset);
+            currentDateElement.textContent = `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월 ${currentDate.getDate()}일`;
+            document.getElementById('next-day').disabled = currentDate.toDateString() === today.toDateString();
+            document.getElementById('bedtime-date').max = today.toISOString().split('T')[0];
+            document.getElementById('waketime-date').max = today.toISOString().split('T')[0];
+        };
+
+        document.getElementById('prev-day').addEventListener('click', () => updateDate(-1));
+        document.getElementById('next-day').addEventListener('click', () => updateDate(1));
+
+        currentDateElement.textContent = `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월 ${currentDate.getDate()}일`;
+        document.getElementById('next-day').disabled = true; // Disable next-day button initially
+        document.getElementById('bedtime-date').max = today.toISOString().split('T')[0];
+        document.getElementById('waketime-date').max = today.toISOString().split('T')[0];
+        const ctx = document.getElementById('sleepChart').getContext('2d');
+    const sleepChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 7}, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - (6 - i));
+                return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+            }),
+            datasets: [{
+                label: '수면 시간',
+                data: Array(7).fill(0),
+                borderColor: 'rgba(139, 149, 255, 1)',
+                backgroundColor: 'rgba(139, 149, 255, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            scales: {
+                x: { type: 'time', time: { unit: 'day' } },
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    const updateSleepData = () => {
+    const bedtimeDate = new Date(document.getElementById('bedtime-date').value);
+    const bedtimeTime = document.getElementById('bedtime-time').value.split(':');
+    bedtimeDate.setHours(bedtimeTime[0], bedtimeTime[1]);
+
+    const waketimeDate = new Date(document.getElementById('waketime-date').value);
+    const waketimeTime = document.getElementById('waketime-time').value.split(':');
+    waketimeDate.setHours(waketimeTime[0], waketimeTime[1]);
+
+    if (waketimeDate <= bedtimeDate) {
+        alert('기상시간이 취침시간보다 이릅니다. 다시 입력해주세요.');
+        return;
+    }
+
+    const sleepDuration = (waketimeDate - bedtimeDate) / (1000 * 60 * 60);
+    const dateLabel = bedtimeDate.toISOString().split('T')[0];
+
+    // 날짜가 같은 데이터가 이미 있는지 확인
+    const existingIndex = sleepChart.data.labels.findIndex(label => label === dateLabel);
+    if (existingIndex !== -1) {
+        sleepChart.data.datasets[0].data[existingIndex] = sleepDuration;
+    } else {
+        sleepChart.data.labels.push(dateLabel);
+        sleepChart.data.datasets[0].data.push(sleepDuration);
+    }
+    sleepChart.update();
+
+    const totalSleepMinutes = Math.floor(sleepDuration * 60);
+    const totalSleepHours = Math.floor(totalSleepMinutes / 60);
+    const remainingMinutes = totalSleepMinutes % 60;
+
+    document.getElementById('total-sleep-time').textContent = `총 수면시간은 ${totalSleepHours} 시간 ${remainingMinutes} 분 입니다.`;
+};
+
+    const deleteSleepData = () => {
+        const bedtimeDate = new Date(document.getElementById('bedtime-date').value);
+        const dateLabel = bedtimeDate.toISOString().split('T')[0];
+
+        const existingIndex = sleepChart.data.labels.findIndex(label => label === dateLabel);
+        if (existingIndex !== -1) {
+            sleepChart.data.labels.splice(existingIndex, 1);
+            sleepChart.data.datasets[0].data.splice(existingIndex, 1);
+            sleepChart.update();
+        }
+
+        document.getElementById('total-sleep-time').textContent = '총 수면시간은 0 시간 0 분 입니다.';
+    };
+
+    document.getElementById('bedtime-time').addEventListener('change', updateSleepData);
+    document.getElementById('waketime-time').addEventListener('change', updateSleepData);
+    document.getElementById('bedtime-date').addEventListener('change', updateSleepData);
+    document.getElementById('waketime-date').addEventListener('change', updateSleepData);
+
+    document.getElementById('prev-day').addEventListener('click', deleteSleepData);
+</script>
+</body>
+</html>
