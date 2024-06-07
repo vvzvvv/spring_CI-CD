@@ -69,7 +69,7 @@ db.comment.belongsTo(db.post, {foreignKey: 'post_id'});
 // 댓글 : 댓글 (1:N) 자기참조 관계     
 db.comment.belongsTo(db.comment, {foreignKey: 'parent_id'});
                                
-
+// db.diary.sync({force:true});
 
 
 

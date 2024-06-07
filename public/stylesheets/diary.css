@@ -5,7 +5,7 @@
 
 .diary-entry {
     display: flex;
-    margin-top: 20px;
+    margin-top: 2rem;
     justify-content: space-between;
 }
 
@@ -20,6 +20,7 @@
 .photo-frame {
     width: 475px;
     height: 420px;
+    margin-top: 2rem;
     background-color: #f0f0f0;
     border-radius: 10px;
     margin-bottom: 10px;
