@@ -8,13 +8,44 @@
     <title>Spring!</title>
 </head>
 <body>
-    <div class="header-login">
-        <h1 class="login">
-            <a href="/users/login">로그인</a>
-        </h1>
-        <h1 class="join">
-            <a href="/users/join">회원가입</a>
-        </h1>
+    <div class="header-login" id="header-login">
+        <!-- Login and Join Links will be dynamically inserted here -->
     </div>
+    <script>
+        // Check if the token is present in local storage
+        function checkToken() {
+            const token = localStorage.getItem('token');
+            const headerLoginDiv = document.getElementById('header-login');
+
+            if (token) {
+                // User is logged in, show Logout
+                headerLoginDiv.innerHTML = `
+                    <h1 class="logout">
+                        <a href="/user/login" onclick="logout()">로그아웃</a>
+                    </h1>
+                `;
+            } else {
+                // User is not logged in, show Login and Join
+                headerLoginDiv.innerHTML = `
+                    <h1 class="login">
+                        <a href="/user/login">로그인</a>
+                    </h1>
+                    <h1 class="join">
+                        <a href="/user/join">회원가입</a>
+                    </h1>
+                `;
+            }
+        }
+
+        // Logout function to remove token from local storage and redirect to login page
+        function logout() {
+            localStorage.removeItem('token');
+            alert('로그아웃 성공!');
+            window.location.href = '/user/login';
+        }
+
+        // Run checkToken on page load
+        document.addEventListener('DOMContentLoaded', checkToken);
+    </script>
 </body>
 </html>
