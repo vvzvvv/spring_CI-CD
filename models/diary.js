@@ -25,8 +25,12 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         photo: {                    // 이미지 저장을 위한 DATATYPE 알아봐야 함
-            type: Sequelize.STRING.BINARY,  
+            type: Sequelize.BLOB,  
             allowNull: true
+        },
+        diary_date: {
+            type: Sequelize.DATEONLY,
+            allowNull: false
         }
     },
 
