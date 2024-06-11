@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<link href="/stylesheets/users/user.css" rel="stylesheet">
+  <head>
+    <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %>
+  </head>
+  
+  <body class = "user-background">
+    <!-- <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %> -->
+    
+
+    <div class = "user">
+
+        <img class = "logo" src="/images/spring_user_logo.png">
+        
+        <form id="login-form" class="form">
+            
+            <div>
+                <div class = "text">
+                    <b>아이디</b>
+                </div>
+                <input type = "text" name="email" value="">
+            </div>
+            <br><br>
+
+            <div>
+                <div class = "text">
+                    <b>비밀번호</b>
+                </div>
+                <input type = "password" name = "password" value="">
+            </div>
+            <br><br><br><br><br>
+
+            <div>
+                <input class="button" type="submit" value="로그인">
+            </div>
+            
+            <br>
+
+            <div class = "member-footer">
+                <div>
+                    <a href="/user/emailVerification" class = "user-link" >비밀번호 찾기</a>
+                    <a href="/user/join"
+                    class = "user-link">회원가입</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const email = formData.get('email');
+            const password = formData.get('password');
+
+            try {
+                const response = await fetch('/user/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify({email, password})
+                });
+               
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token);  // 서버에서 받은 token이 브라우저에 저장됨
+                    alert('로그인 성공!');
+                    window.location.href = '/';     // 홈으로 이동
+                }
+                else if (response.status == 404) {   // 존재하지 않는 사용자인 경우
+                    const error = await response.json();
+                    alert(`${error.message}`);
+                    window.location.href = '/user/join';
+                }
+                else if (response.status == 401) {     // 비밀번호가 일치하지 않는 경우
+                    const error = await response.json();
+                    alert(`${error.message}`);
+                    window.location.href = '/user/login';
+                }
+                else {
+                    const error = await response.json();
+                    alert(`${error.message}`);
+                    window.location.href = '/';
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                alert('나중에 다시 시도해주세요.');
+            }
+        });
+    </script>
+  </body>
+</html>
