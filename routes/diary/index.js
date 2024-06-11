@@ -9,9 +9,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/:date',diaryGET);
 router.post('/', diaryPOST);
-// router.get('/:date', diaryController.getDiaryByDate);
-// router.post('/:date/photo', diaryController.addPhoto);
-// router.delete('/photo/:id', diaryController.deletePhoto);
 
 module.exports = router;
 

@@ -16,7 +16,7 @@ const upload = multer({
 module.exports = [upload.single('photo'), async (req, res) => {
     console.log("...");
     const { userID, diaryID, date, weather, contents } = req.body;
-    const photoFile = req.file; // multer를 통해 업로드된 파일
+    const photoFile = req.file; 
 
     if (!photoFile) {
         return res.status(400).json({ message: '사진을 선택하세요.' });

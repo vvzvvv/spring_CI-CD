@@ -40,6 +40,18 @@
         </main>
     </div>
     <script>
+        function getRandomDiaryPrompt() {
+            const prompts = [
+                "오늘 하루는 어땠나요?",
+                "기분 좋은 일이 있었나요?",
+                "오늘 있었던 특별한 순간을 기록해보세요.",
+                "하루 중 기억에 남는 일이 무엇인가요?",
+                "오늘 느꼈던 감정을 적어보세요."
+            ];
+            const randomIndex = Math.floor(Math.random() * prompts.length);
+            return prompts[randomIndex];
+        }
+
         function getTodayDate() {
             const today = new Date();
             const year = today.getFullYear();
@@ -51,6 +63,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             const dateInput = document.getElementById('date');
             dateInput.max = getTodayDate();
+
+            const diaryText = document.getElementById('diary-text');
+            diaryText.placeholder = getRandomDiaryPrompt(); 
         });
 
         function loadDiaryEntry() {
@@ -61,22 +76,24 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    document.querySelector('.diary-id').value = '';
+                    document.getElementById('weather').value = '';
+                    document.getElementById('diary-text').value = '';
+                    document.querySelector(".photo-of-the-day").setAttribute("src", "");
+
                     if (Object.keys(data.diary).length != 0) {
-                        document.querySelector('.diary-id').value = data.diary.user_id;
-                        document.getElementById('weather').value = data.diary.weather;
-                        document.getElementById('diary-text').value = data.diary.contents;
+                        document.querySelector('.diary-id').value = data.diary.diary_id || '';
+                        document.getElementById('weather').value = data.diary.weather || '';
+                        document.getElementById('diary-text').value = data.diary.contents || '';
                         if (data.diary.photo) {
-                            document.querySelector(".photo-of-the-day").setAttribute("src", data.diary.photo);
-                        } else {
-                            document.querySelector(".photo-of-the-day").setAttribute("src", "");
+                           document.querySelector(".photo-of-the-day").setAttribute("src", data.diary.photo);
                         }
                     } else {
-                        document.querySelector('.diary-id').value = '';
-                        document.getElementById('weather').value = '';
-                        document.getElementById('diary-text').value = '';
-                        document.querySelector(".photo-of-the-day").setAttribute("src", "");
+                      const diaryText = document.getElementById('diary-text');
+                      //  diaryText.placeholder = getRandomDiaryPrompt();
                     }
-                })
+              
+              })
                 .catch(error => console.error('Error fetching diary entry:', error));
             }
         }
@@ -158,7 +175,7 @@
 
             reader.onload = function(event) {
                 document.querySelector(".photo-of-the-day").setAttribute("src", event.target.result);
-                console.log('Photo URL:', event.target.result); // 디버깅용 로그
+                console.log('Photo URL:', event.target.result);
             };
 
             reader.onerror = function(error) {

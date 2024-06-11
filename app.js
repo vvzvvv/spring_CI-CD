@@ -6,13 +6,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var diaryRouter = require('./routes/diary/index'); //다이어리 라우터 설정
+var diaryRouter = require('./routes/diary/index');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use('/diary', diaryRouter);
 
 app.use(logger('dev'));
 app.use(express.json());
