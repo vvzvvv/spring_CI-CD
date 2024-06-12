@@ -2,21 +2,15 @@ const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 dotenv.config();
 
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+const secretKey = process.env.MY_SECRET;
 
-    if (token == null) {
-        res.sendStatus(401).send({message: "로그인이 필요한 서비스입니다."}); // Unauthorized
-    }
+const authenticateToken = (token) => {
+    console.log('authenticateToken: ', token);
 
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
-            return res.sendStatus(403).send({message: "다시 로그인해주세요."}); // Forbidden
-        }
-        req.user = user;
-        next();
-    });
+    const decoded = jwt.verify(token, secretKey);
+    console.log('decoded: ', decoded);
+    const userId = decoded.userId;
+    return userId;
 }
 
 module.exports = authenticateToken;

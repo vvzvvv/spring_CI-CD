@@ -25,7 +25,7 @@ const login = async(req, res, next) => {
         
         // 토큰 생성하고 응답에 토큰 담아서 보내줌
         const secretKey = process.env.MY_SECRET;
-        const token = jwt.sign({userId: findUser.userId}, secretKey);
+        const token = jwt.sign({userId: findUser.user_id}, secretKey);
         res.status(200).send({
             message: "로그인 성공!",
             token: token

@@ -61,11 +61,15 @@
                 score: questionScore,
                 resultString: resultString
             };
+            
+            const token = localStorage.getItem('token');
+            console.log('token: ', token);
 
             const row = fetch('/test', { 
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(dataToSend)
             })

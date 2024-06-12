@@ -9,3 +9,17 @@
     <%-include('./testList.ejs', {testList: testList}) %>
     <%-include('./testContent.ejs') %>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            console.log('Token exists in localSotrage: ', token);
+        }
+        else {
+            console.log('Token does not exist in localStorage');
+            window.location.href = '/user/login';
+        }
+    })
+</script>
