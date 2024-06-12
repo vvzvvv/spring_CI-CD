@@ -46,3 +46,28 @@
     color: #777876;
     font-family: 'worksans-italic';
 }
+
+.logout {
+    display:inline-block; 
+    height: 28px;
+    margin-right: 5.7rem;
+    font-style: Bold;
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 2.8rem;
+
+    color: #777876;
+    font-family: 'worksans-italic';
+}
+
+.login a {
+    text-decoration: none;
+}
+
+.join a {
+    text-decoration: none;
+}
+
+.logout a {
+    text-decoration: none;
+}
