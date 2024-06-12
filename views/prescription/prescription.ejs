@@ -14,12 +14,12 @@
     
     <div class="view-container">
         <!-- <%-include('prescriptionCalendar') %> -->
-        <%-include('prescriptionChart') %>
+        <%-include('prescriptionChart', {chart: chart}) %>
     </div> 
     
     <div class="prescription-container">
-        <%-include('prescriptionContent') %>
-        <%-include('prescriptionRecord') %>
+        <%-include('prescriptionContent', {prescriptionContent: prescriptionContent}) %>
+        <%-include('prescriptionReport', {prescriptionContent: prescriptionContent, prescriptionReport: prescriptionReport}) %>
     </div>
 
 </body>

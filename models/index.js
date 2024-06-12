@@ -16,15 +16,15 @@ db.user = require("./user.js")(sequelize, Sequelize);
 db.post = require("./post.js")(sequelize, Sequelize);
 db.comment = require("./comment.js")(sequelize, Sequelize);
 db.test = require("./test.js")(sequelize, Sequelize);
-db.medicine = require("./medicine.js")(sequelize, Sequelize);
-db.doseReport = require("./dose_report.js")(sequelize, Sequelize);
+db.prescription = require("./prescription.js")(sequelize, Sequelize);
+db.prescriptionReport = require("./prescription_report.js")(sequelize, Sequelize);
 db.sleepReport = require("./sleep_report.js")(sequelize, Sequelize);
 db.exerciseReport = require("./exercise_report.js")(sequelize, Sequelize);
 db.diary = require("./diary.js")(sequelize, Sequelize);
 
-
-
-
+//db.prescription.sync({force: true});
+//db.prescriptionReport.sync({force: true});
+//db.prescription_prescriptionReport.sync({force: true});
 
 
 /*
@@ -47,16 +47,20 @@ db.exerciseReport.belongsTo(db.user, {foreignKey: 'user_id'});
 db.user.hasMany(db.diary, {foreignKey: 'user_id'});              
 db.diary.belongsTo(db.user, {foreignKey: 'user_id'});
 
+// 사용자 : 처방약 (1:N)
+db.user.hasMany(db.prescription, {foreignKey: 'user_id'});         
+db.prescription.belongsTo(db.user, {foreignKey: 'user_id'});
+
 // 사용자 : 복용기록 (1:N)
-db.user.hasMany(db.doseReport, {foreignKey: 'user_id'});         
-db.doseReport.belongsTo(db.user, {foreignKey: 'user_id'});
+db.user.hasMany(db.prescriptionReport, {foreignKey: 'user_id'});         
+db.prescriptionReport.belongsTo(db.user, {foreignKey: 'user_id'});
 
 /*
 약 : 복용기록 (N:M)
-N:M 관계라서 중간 테이블인 medicine_doseReport 테이블이 생성됨
+N:M 관계라서 중간 테이블인 prescription_prescriptionReport 테이블이 생성됨
 */
-db.medicine.belongsToMany(db.doseReport, { through: 'medicine_doseReport', foreignKey: 'medicine_id'});       
-db.doseReport.belongsToMany(db.medicine, { through: 'medicine_doseReport' , foreignKey: 'dose_report_id'});
+db.prescription.hasMany(db.prescriptionReport, { foreignKey: 'prescription_id'});       
+db.prescriptionReport.belongsTo(db.prescription, { foreignKey: 'prescription_id'});
 
 // 사용자 : 게시글 (1:N)
 db.user.hasMany(db.post, {foreignKey: 'user_id'});               
@@ -70,7 +74,8 @@ db.comment.belongsTo(db.post, {foreignKey: 'post_id'});
 db.comment.belongsTo(db.comment, {foreignKey: 'parent_id'});
                                
 
-
-
+// db.prescription.sync({force: true});
+// db.prescriptionReport.sync({force: true});
+// sequelize.sync({force: true});
 
 module.exports = db;

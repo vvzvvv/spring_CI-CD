@@ -55,6 +55,10 @@ a:visited{
     align-items: center;
 }
 
+.prescription a {
+    text-decoration-line: none;
+}
+
 .sleep {
     display: flex;
     gap: 2.6rem;
