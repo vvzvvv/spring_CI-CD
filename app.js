@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var diaryRouter = require('./routes/diary/index');
 var userRouter = require('./routes/user/index');
 var diaryRouter = require('./routes/diary/index'); //다이어리 라우터 설정
+//var prescriptionRouter = require('./routes/prescription/index'); // * 약기록 라우트 추가
 
 var app = express();
 // view engine setup
@@ -23,8 +24,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+<<<<<<< feature/#19
+app.use('/users', usersRouter);
+//app.use('/prescription', prescriptionRouter); // * 약기록 라우트 추가
+
+=======
 app.use('/user', userRouter);
 app.use('/diary', diaryRouter);
+>>>>>>> main
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
