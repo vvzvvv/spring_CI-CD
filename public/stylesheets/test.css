@@ -16,7 +16,6 @@
 }
 .test-result-page{
     position: relative;
-    top:23.8rem;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
