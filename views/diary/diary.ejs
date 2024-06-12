@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="/stylesheets/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/diary.css">
 </head>
 <body>
@@ -14,7 +15,7 @@
             <section class="diary-entry">
                 <div class="photo">
                     <div class="photo-frame">
-                        <img class="photo-of-the-day">
+                        <img class="photo-of-the-day" src="https://storage.googleapis.com/spring-image/default.jpg">
                     </div>
                     <input type="file" id="photoInput" style="display: none;" accept="image/*" onchange="addPhoto(event)">
                     <button class="photo-button" onclick="document.getElementById('photoInput').click()">+</button>
@@ -79,23 +80,37 @@
                     document.querySelector('.diary-id').value = '';
                     document.getElementById('weather').value = '';
                     document.getElementById('diary-text').value = '';
-                    document.querySelector(".photo-of-the-day").setAttribute("src", "");
+                    document.querySelector(".photo-of-the-day").setAttribute("src", "https://storage.googleapis.com/spring-image/default.jpg");
 
                     if (Object.keys(data.diary).length != 0) {
                         document.querySelector('.diary-id').value = data.diary.diary_id || '';
                         document.getElementById('weather').value = data.diary.weather || '';
                         document.getElementById('diary-text').value = data.diary.contents || '';
                         if (data.diary.photo) {
-                           document.querySelector(".photo-of-the-day").setAttribute("src", data.diary.photo);
+                            currentPhotoURL = data.diary.photo;
+                            document.querySelector(".photo-of-the-day").setAttribute("src", data.diary.photo);
+                        }
+                        else {
+                            document.querySelector(".photo-of-the-day").setAttribute("src", "https://storage.googleapis.com/spring-image/default.jpg");
                         }
                     } else {
-                      const diaryText = document.getElementById('diary-text');
+                        const diaryText = document.getElementById('diary-text');
                       //  diaryText.placeholder = getRandomDiaryPrompt();
                     }
               
               })
                 .catch(error => console.error('Error fetching diary entry:', error));
             }
+        }
+
+        function getFileNameFromURL(url) {
+            // URL 객체를 생성합니다.
+            const urlObj = new URL(url);
+            // URL 객체의 pathname 속성을 사용하여 경로를 얻습니다.
+            const pathname = urlObj.pathname;
+            // 경로를 '/'로 분할하여 마지막 요소를 파일명으로 가져옵니다.
+            const fileName = pathname.split('/').pop();
+            return fileName;
         }
 
         function saveDiary() {
@@ -117,7 +132,10 @@
             formData.append('contents', contents);
             if (photoFile) {
                 formData.append('photo', photoFile);
+            } else {
+                formData.append('existingPhotoUrl', currentPhotoURL); // 새 사진이 없을 때 기존 사진 URL 사용
             }
+
 
             fetch('/diary', {
                 method: 'POST',
@@ -146,7 +164,7 @@
             const contents = document.getElementById('diary-text').value;
             const photoInput = document.getElementById('photoInput');
             const photoFile = photoInput.files[0];
-
+            
             const formData = new FormData();
             formData.append('date', date);
             formData.append('weather', weather);

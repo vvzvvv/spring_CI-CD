@@ -14,18 +14,17 @@ const upload = multer({
 });
 
 module.exports = [upload.single('photo'), async (req, res) => {
-    console.log("...");
-    const { userID, diaryID, date, weather, contents } = req.body;
-    const photoFile = req.file; 
+    const { userID, diaryID, date, weather, contents, existingPhotoUrl } = req.body;
+    const photoFile = req.file;
 
-    if (!photoFile) {
-        return res.status(400).json({ message: '사진을 선택하세요.' });
+    let photoUrl = existingPhotoUrl;
+
+    if (photoFile) {
+        photoUrl = `https://storage.googleapis.com/spring-image/${photoFile.filename}`;
+        console.log('업로드된 파일:', photoFile);
     }
 
     try {
-        const photoUrl = `https://storage.googleapis.com/spring-image/${photoFile.filename}`;
-        console.log('업로드된 파일:', photoFile);
-
         console.log('일기 저장 요청:', { userID, diaryID, date, weather, contents, photoUrl });
         const entry = await diaryQuery.saveDiaryEntry(userID, diaryID, date, weather, contents, photoUrl);
         res.status(200).json({ message: '저장 완료', entry });
