@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서구실 운동 페이지</title>
+    <link rel="stylesheet" href="/stylesheets/exercise.css"> <!-- 내 스타일시트 파일 경로 -->
+    <link rel="stylesheet" href="/stylesheets/menu.css"> <!-- 메뉴 스타일시트 -->
+    <%-include('../header.ejs') %>
+    <%-include('../menu.ejs') %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="north">
+      <form id="exerciseForm">
+        <div class="north-content">
+          <input id="but1" type="button" name="yes" value="전" onclick="previousDay()">
+          <input id="but2" type="button" name="tody" value="" disabled>
+          <input id="but3" type="button" name="tom" value="후" onclick="nextDay()">
+          <input type="date" id="datePicker">
+        </div>
+    </div>
+
+    <div class="centers">
+      <div class="center1">
+        <canvas id="exerciseChart" width="800" height="200"></canvas>
+      </div>
+
+      <div class="center2">
+        <!-- <form id="exerciseForm" onsubmit="addExercise(event)"> -->
+        운동 : <input type="text" name="exercise_type" id="exercise_type" size="16"><br><br><br><br><br>
+        <select name="shour" id="select_shour">
+          <option value="00">00시</option>
+          <option value="01">01시</option>
+          <option value="02">02시</option>
+          <option value="03">03시</option>
+          <option value="04">04시</option>
+          <option value="05">05시</option>
+          <option value="06">06시</option>
+          <option value="07">07시</option>
+          <option value="08">08시</option>
+          <option value="09">09시</option>
+          <option value="10">10시</option>
+          <option value="11">11시</option>
+          <option value="12">12시</option>
+          <option value="13">13시</option>
+          <option value="14">14시</option>
+          <option value="15">15시</option>
+          <option value="16">16시</option>
+          <option value="17">17시</option>
+          <option value="18">18시</option>
+          <option value="19">19시</option>
+          <option value="20">20시</option>
+          <option value="21">21시</option>
+          <option value="22">22시</option>
+          <option value="23">23시</option>
+        </select>      
+        <select name="sminute" id="select_sminute">
+          <option value="00">00분</option>
+          <option value="10">10분</option>
+          <option value="20">20분</option>
+          <option value="30">30분</option>
+          <option value="40">40분</option>
+          <option value="50">50분</option>
+        </select><br><br><br><br>
+        <select name="fhour" id="select_fhour">
+          <option value="00">00시</option>
+          <option value="01">01시</option>
+          <option value="02">02시</option>
+          <option value="03">03시</option>
+          <option value="04">04시</option>
+          <option value="05">05시</option>
+          <option value="06">06시</option>
+          <option value="07">07시</option>
+          <option value="08">08시</option>
+          <option value="09">09시</option>
+          <option value="10">10시</option>
+          <option value="11">11시</option>
+          <option value="12">12시</option>
+          <option value="13">13시</option>
+          <option value="14">14시</option>
+          <option value="15">15시</option>
+          <option value="16">16시</option>
+          <option value="17">17시</option>
+          <option value="18">18시</option>
+          <option value="19">19시</option>
+          <option value="20">20시</option>
+          <option value="21">21시</option>
+          <option value="22">22시</option>
+          <option value="23">23시</option>
+        </select>      
+        <select name="fminute" id="select_fminute">
+          <option value="00">00분</option>
+          <option value="10">10분</option>
+          <option value="20">20분</option>
+          <option value="30">30분</option>
+          <option value="40">40분</option>
+          <option value="50">50분</option>
+        </select><br>
+        <!--input type="submit" class="tsubmitbut"-->
+
+        <div class="south">
+          <table border="1" id="evaluation" width="1200px">
+            <tr>
+              <th colspan="2">오늘의 운동 평가</th>
+            </tr>
+            <tr>
+              <td rowspan="2">
+                <input type="checkbox" name="star" id="star1" value="1">
+                <label for="star1" class="star-label"></label>
+                <input type="checkbox" name="star" id="star2" value="2">
+                <label for="star2" class="star-label"></label>
+                <input type="checkbox" name="star" id="star3" value="3">
+                <label for="star3" class="star-label"></label>
+                <input type="checkbox" name="star" id="star4" value="4">
+                <label for="star4" class="star-label"></label>
+                <input type="checkbox" name="star" id="star5" value="5">
+                <label for="star5" class="star-label"></label>
+              </td>
+              <td>
+                <!--textarea value="오늘의 운동은 어땠나요?" id="column"></textarea-->
+                <textarea name="comments" id="comments">오늘의 운동은 어땠나요?</textarea>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <input type="submit" class="tsubmitbut" value="최종제출"> 
+      </form>
+      <!--input type="submit" class="tsubmitbut" value="최종제출"-->
+    </div>
+    </div>
+
+    <div class="souths">
+      <div class="southleft">
+        <table class="calendar" id="calendar">
+          <thead>
+            <tr>
+              <th>일</th>
+              <th>월</th>
+              <th>화</th>
+              <th>수</th>
+              <th>목</th>
+              <th>금</th>
+              <th>토</th>
+            </tr>
+          </thead>
+          <tbody id="calendar-body">
+            <!-- 달력 날짜가 여기 표시됨 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    
+    <script> 
+    // 최종제출 버튼 누르면 저장되는거
+    document.getElementById('exerciseForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const shour = formData.get('shour');
+      const sminute = formData.get('sminute');
+      const fhour = formData.get('fhour');
+      const fminute = formData.get('fminute');
+      const date = document.getElementById('datePicker').value;
+      const star = document.querySelectorAll('input[name="star"]:checked').length; 
+      console.log(star);
+
+      const exerciseData = {
+            exercise_type: formData.get('exercise_type'),
+            shour: shour,
+            sminute: sminute,
+            fhour: fhour,
+            fminute: fminute,
+            start_exercise_time: `${shour}:${sminute}`, // 추가된 필드
+            end_exercise_time: `${fhour}:${fminute}`,   // 추가된 필드
+            //exercise_date: new Date().toISOString().split('T')[0], // 현재 날짜 추가
+            exercise_date: date,
+            evaluation: star,
+            comments: formData.get('comments')
+        };
+
+
+    try {
+        const response = await fetch('exercise/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(exerciseData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to save exercise');
+        }
+
+        const result = await response.json();
+        console.log(result);
+        alert('운동 기록이 저장되었습니다~.~');
+
+        //운동그래프 띄우기
+        updateChart([exerciseData]);
+  
+    } catch (error) {
+        console.error(error);
+        //alert('운동 기록 저장에 실패했습니다.'); 자꾸 창이떠서 걍 없앰
+    }
+  });
+
+  //운동그래프 띄우기
+  function updateChart(exerciseData) {
+    const ctx = document.getElementById('exerciseChart').getContext('2d');
+    const chartData = {
+        labels: Array.from({ length: 24 }, (_, i) => `${i}시`),
+        datasets: exerciseData.map(data => {
+            const startHour = parseInt(data.start_exercise_time.split(':')[0]);
+            const durationMinutes = (parseInt(data.end_exercise_time.split(':')[0]) * 60 + parseInt(data.end_exercise_time.split(':')[1])) -
+                                    (parseInt(data.start_exercise_time.split(':')[0]) * 60 + parseInt(data.start_exercise_time.split(':')[1]));
+            const durationHours = durationMinutes / 60;
+            return {
+                label: data.exercise_type,
+                data: Array.from({ length: 24 }, (_, i) => (i === startHour ? durationMinutes : 0)),
+                backgroundColor: getRandomColor(),
+                borderColor: getRandomColor(),
+                borderWidth: 1
+            };
+        })
+    };
+    if (exerciseChart) {
+        exerciseChart.destroy();
+    }
+    exerciseChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: '시간'
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 90,
+                        minRotation: 90
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: '운동 시간 (분)'
+                    },
+                    beginAtZero: true,
+                    min: 0,
+                    ticks: {
+                        stepSize: 30
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+      // 초기 로딩 시 현재 날짜 표시
+      updateCurrentDate();
+      // 하루 전 버튼 클릭 시
+      function previousDay() {
+        changeDate(-1);
+      }
+      // 하루 후 버튼 클릭 시
+      function nextDay() {
+        changeDate(1);
+      }
+      // 날짜 변경 함수
+      function changeDate(days) {
+        const currentDate = document.getElementById('but2').value;
+        let newDate = new Date(currentDate);
+        newDate.setDate(newDate.getDate() + days);
+        document.getElementById('but2').value = formatDate(newDate);
+      }
+
+
+      // 날짜 형식을 YYYY.MM.DD로 변환하는 함수
+      function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}.${month}.${day}`;
+      }
+      // 현재 날짜를 표시하는 함수
+      function updateCurrentDate() {
+        const today = new Date();
+        document.getElementById('but2').value = formatDate(today);
+      }
+
+      // 왼쪽 아래 캘린더
+      document.addEventListener('DOMContentLoaded', function() {
+        generateCalendar(new Date());
+      });
+
+      function generateCalendar(date) {
+        const calendarBody = document.getElementById('calendar-body');
+        calendarBody.innerHTML = '';
+
+        const year = date.getFullYear();
+        const month = date.getMonth();
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let dateCounter = 1;
+        for (let i = 0; i < 6; i++) { // weeks
+          const row = document.createElement('tr');
+
+          for (let j = 0; j < 7; j++) { // days
+            const cell = document.createElement('td');
+            if (i === 0 && j < firstDay || dateCounter > daysInMonth) {
+              cell.innerHTML = '';
+            } else {
+              cell.innerHTML = dateCounter;
+              if (dateCounter === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) {
+                cell.classList.add('today');
+              }
+              dateCounter++;
+            }
+            row.appendChild(cell);
+          }
+          calendarBody.appendChild(row);
+        }
+      }
+      // 별 클릭시 색깔 바꾸기
+        const starLabels = document.querySelectorAll('.star-label');
+        starLabels.forEach((label) => {
+          label.addEventListener('click', () => {
+            const checkbox = document.getElementById(label.htmlFor);
+            if (checkbox.checked) {
+              label.style.backgroundImage = "url('/images/blackstar.png')";
+              //checkbox.checked = false;
+            } else {
+              label.style.backgroundImage = "url('/images/yellowstar.png')";
+              //checkbox.checked = true;
+            }
+          });
+        });
+
+  // 차트 초기화
+  const ctx = document.getElementById('exerciseChart').getContext('2d');
+  const exerciseChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({ length: 24 }, (_, i) => `${i}시`), // 0시부터 23시까지 라벨
+      datasets: []
+    },
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: '시간'
+          },
+          ticks: {
+            autoSkip: false,
+            maxRotation: 90,
+            minRotation: 90
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: '운동 시간 (분)'
+          },
+          beginAtZero: true,
+          min: 0,
+          ticks: {
+            stepSize: 30 // y축 눈금을 30분 단위로 설정
+          }
+        }
+      }
+    }
+  });
+  
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+    </script>
+  </body>
+</html> 

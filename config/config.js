@@ -15,5 +15,7 @@ module.exports = {
     "host": process.env.DB_HOST,
     "dialect": "mysql",
     logging: false
-  }
+  },
+  //추가한거
+  
 }
