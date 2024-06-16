@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<div class="section-record">
+    <div class="record-title">
+        <h1>복용약 기록</h1>
+        <button onclick="openPopupReport()">기록 추가</button>
+    </div>
+
+    <div class="record-list" id="consumption-list">
+
+        <div class="prescription-list-content">
+
+            <% for(var i = 0; i<prescriptionReport.length; i++){ %>
+            <div class="record-object">
+                <h1><%= prescriptionReport[i].prescription.prescription_name %></h1>
+                <hr>
+                <div>
+                    <div style="margin: 0;">
+                        <div style="margin: 0 10rem auto auto;">
+                            <p><b>복용 일자</b></p>
+                            <p><%= prescriptionReport[i].prescription_report_date %></p>
+                        </div>
+                        <div style="margin: 0;">
+                            <p><b>복용 시간</b></p>
+                            <p><%= prescriptionReport[i].prescription_report_time %></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p><b>현재 복용량</b></p>
+                    <p><%= prescriptionReport[i].prescription.prescription_amount %> mg</p>
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+
+        <div id="popupReport" class="popup-record">
+            <div class="record-form" id="report-list">
+                <h3>복용 기록 추가</h3>
+                <form id="add-prescription-report-form">
+                    <select id="report-select">
+                        <option>처방약 선택</option>
+                        <% for(var i = 0; i < prescriptionContent.length;i++) { %>
+                            <option value="<%= prescriptionContent[i].prescription_id %>"><%= prescriptionContent[i].prescription_name %>&nbsp;&nbsp;&nbsp;&nbsp;<%= prescriptionContent[i].prescription_amount %> mg</option>}
+                        <% } %>
+                        <!-- <option value="">처방약 선택</option> -->
+                    </select>
+                    <input type="date" id="report-date" placeholder="복용 날짜">
+                    <input type="time" id="report-time" placeholder="복용 시간">
+                    <button type="submit" class="add-button-record">추가</button>
+                    <span class="close-btn-record" onclick="closePopupReport()">닫기</span>
+                </form>
+            </div>            
+        </div>
+        
+    </div>
+
+    <!-- <button onclick="removeRecord(this)">-</button> -->
+    <!-- <button class="add-button" onclick="addConsumption()">+ 추가</button> -->
+</div>
+
+<script>
+    function openPopupReport() {
+		var popup = document.getElementById("popupReport");
+		popup.style.visibility = "visible";
+		popup.style.opacity = "1";
+	}
+
+	function closePopupReport() {
+		var popup = document.getElementById("popupReport");
+		popup.style.visibility = "hidden";
+		popup.style.opacity = "0";
+	}
+
+    document.getElementById('add-prescription-report-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting the default way
+        addReport();
+    });
+
+    function addReport() {
+        const date = document.getElementById('report-date').value;
+        const time = document.getElementById('report-time').value;
+        const prescriptionID = document.getElementById('report-select').value;
+        
+        fetch('/prescription/report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ date, time, prescriptionID }),
+            //body: JSON.stringify({ date, time }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status) {
+                alert('복용 기록이 성공적으로 추가되었습니다.');
+                closePopup();
+            } else {
+                alert('복용 기록 추가에 실패했습니다.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('복용 기록 추가 중 오류가 발생했습니다.');
+        });
+
+        return false; // 폼 제출
+    }
+    
+
+
+</script>

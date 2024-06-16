@@ -31,7 +31,15 @@
         document.getElementsByClassName("score-describe")[0].innerHTML = questionScore + "점";
     }
 
+    let today = new Date();
+    let year = today.getFullYear(); // 년도
+    let month = (today.getMonth() + 1).toString().padStart(2, '0'); //월
+    let date = today.getDate().toString().padStart(2, '0');  // 날짜
+    
+    let todayString = year + "." + month + "." + date;
+
     document.addEventListener("DOMContentLoaded", function() {
+        document.getElementsByClassName("test-date")[0].innerHTML = todayString;
         var form = document.querySelector('.test-question-form');
         form.addEventListener('submit', function(event) {
             event.preventDefault();  // 기본 폼 제출 동작을 막음
@@ -47,6 +55,43 @@
             console.log(resultString);
 
             // TODO : 서버로 결과 폼 내용 보내기()
+            // 서버로 데이터 전송하기
+            var dataToSend = {
+                date: todayString.replaceAll('.','-'),
+                score: questionScore,
+                resultString: resultString
+            };
+            
+            const token = localStorage.getItem('token');
+            console.log('token: ', token);
+
+            const row = fetch('/test', { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(result => result.json())
+            .then(data => {
+                console.log('Success:', data);
+                if(data.status == 'fail'){
+                    window.location.href = `/test/${data.data.test_id}`;
+                    window.alert("오늘 이미 테스트를 진행했습니다. \n오늘 작성한 테스트 결과를 확인하세요!");
+                }
+                else{
+                    return data;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            row.then((data) => {
+                console.log('Response in final then:', data.data);
+                window.location.href = `/test/${data.data.test_id}`;
+            });
 
             let resultData;
             if(questionScore<=4) resultData = result[0];
@@ -57,18 +102,23 @@
 
             document.getElementsByClassName("result-title")[0].innerHTML = resultData.title;
             document.getElementsByClassName("result-content")[0].innerHTML = resultData.resultContent;
+
+            // location.href = `/test/${resultData.test_id}
+            // location.reload();
+            // console.log(location.href);
         });
     });
 </script>
 
 <div class="test-content">
-    <h1 class="test-date">2024.04.14</h1>
+    <h1 class="test-date"></h1>
     <div class="test-div">
         <div class="test-header">
             <h1 class="no-highlight" style="display: inline">지난 2주일 동안 당신은 다음의 문제들로 인해서 </h1>
             <h1 class="highlight" style="display: inline">얼마나 자주 방해를 받았습니까?</h1>
         </div>
         <div class="test-question" >
+            <input type="hidden" id="testResult"/>
             <form class="test-question-form" >
                 <h1 class="question">1. 일 또는 여가 활동을 하는데 흥미나 즐거움을 느끼지 못함</h1>
                 <div class="question-choice" onchange="countScore()">

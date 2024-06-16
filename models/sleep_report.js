@@ -1,15 +1,4 @@
 module.exports = (sequelize, Sequelize) => {
-    /*
-    sleep_report_id: 수면 내역 ID
-    sleep_date: 수면 날짜
-    sleep_rate: 오늘 수면 평가
-    sleep_duration: 수면 시간
-    start_sleep_time: 취침 시간
-    end_sleep_time: 기상 시간
-    user_id: 회원 ID(FK)
-
-    외래키 필드는 시퀄라이즈가 생성
-    */
     const SleepReport = sequelize.define("sleep_report", {
         sleep_report_id: {
             type: Sequelize.INTEGER,
@@ -19,29 +8,41 @@ module.exports = (sequelize, Sequelize) => {
         },
         sleep_date: {
             type: Sequelize.DATEONLY,
-            allowNull: false
+            allowNull: true
+            //allowNull: false
+        },
+        wake_date: {
+            type: Sequelize.DATEONLY,
+            allowNull: true
+            //allowNull: false
         },
         sleep_rate: {
             type: Sequelize.INTEGER,
             allowNull: true
-            // check constraint 추가해주어야함
+            //allowNull: false
         },
         sleep_duration: {
-            type: Sequelize.DATEONLY,
-            allowNull: false
+            type: Sequelize.TIME,
+            allowNull: true
+            //allowNull: false
         },
         start_sleep_time: {
-            type: Sequelize.DATEONLY,
-            allowNull: false
+            type: Sequelize.TIME,
+            allowNull: true
+            //allowNull: false
         },
         end_sleep_time: {
-            type: Sequelize.DATEONLY,
-            allowNull: false
+            type: Sequelize.TIME,
+            allowNull: true
+            //allowNull: false
+        },
+        user_id: {
+            type: Sequelize.INTEGER,
+            allowNull: true
+            //allowNull: false
         }
-    },
-
-    {timestamps: false}
-    
-    );
+    }, { timestamps: false });
     return SleepReport;
-}
+};
+
+

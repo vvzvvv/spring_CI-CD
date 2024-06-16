@@ -132,12 +132,18 @@ hr {
     width: 92%;
 }
 
-.chart { /* 라인 차트 */
+/* .chart { 
     position: absolute;
-    width: 70rem;
+    width: 140rem;
     height:40rem;
     margin-top: -17rem;
-    margin-left: 73rem;
+    margin-left: 3rem;
+} */
+
+#line-chart{
+    width: 280px;
+    height: 800px;
+    margin-top: -17rem;
 }
 
 .view-container {

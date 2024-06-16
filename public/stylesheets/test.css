@@ -9,6 +9,23 @@
     height: 100%;
     justify-content: center;
 }
+.test-input{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.test-result-page{
+    position: relative;
+    top:23.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2.8rem;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
 
 .test-list{
     position: relative;
@@ -204,6 +221,18 @@ input:checked{
     height: 4.7rem;
     background-color: #DBE6D9;
     border-radius: 1rem;
+    border: 0rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-button{
+    width: 4rem;
+    height: 4rem;
+    background-color: #DBE6D9;
+    border-radius: 4rem;
     border: 0rem;
     display: flex;
     flex-direction: row;
