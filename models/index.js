@@ -26,7 +26,6 @@ db.diary = require("./diary.js")(sequelize, Sequelize);
 
 
 
-
 /*
  * 모델 간 연관관계 설정
 */
@@ -71,6 +70,7 @@ db.comment.belongsTo(db.comment, {foreignKey: 'parent_id'});
                                
 
 
+// db.sleepReport.sync({force: true});
 
 
 module.exports = db;
