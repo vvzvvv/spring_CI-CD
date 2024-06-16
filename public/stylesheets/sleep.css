@@ -1,0 +1,122 @@
+body {
+    margin-top: -10rem;
+    margin-left: 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'WorkSansItalic';
+}
+#sleep-form{
+    width: 80%;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+
+.section {
+    width: 48%;
+}
+.section h2 {
+    padding: 10px;
+    border-radius: 10px;
+}
+.date-selector {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+.date-selector button {
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 1em;
+}
+.date-selector span {
+    margin: 0 15px;
+    font-size: 1.2em;
+}
+.sleep-time, .wake-time, .sleep-quality {
+    margin-bottom: 20px;
+}
+.time-input, .date-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d0d0d0;
+    text-align: center;
+    font-size: 1.4em;
+}
+.summary {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+canvas {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 82px;
+}
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    height: 20px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px #d0d0d0, inset 20% 0 0 0 #d0d0d0, inset 40% 0 0 0 #d0d0d0, inset 60% 0 0 0 #d0d0d0, inset 80% 0 0 0 #d0d0d0;
+}
+.progress-bar {
+    height: 100%;
+    width: 10%;
+    background-color: #e0e0e0;
+    border-radius: 20px 0 0 20px;
+    transition: width 0.25s, background-color 0.25s;
+}
+.progress-bar.gradient {
+    background: linear-gradient(to right, 
+        rgba(139, 149, 255, 0.1) 0%, rgba(139, 149, 255, 0.25) 20%, 
+        rgba(139, 149, 255, 0.4) 40%, rgba(139, 149, 255, 0.55) 60%, 
+        rgba(139, 149, 255, 0.7) 80%, rgba(139, 149, 255, 0.85) 100%);
+}
+.handle {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(139, 149, 255, 1);
+    position: absolute;
+    top: 0;
+    right: -10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+}
+.box {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.button{
+    width: 8rem;
+    height: 4rem;
+    font-size: 2rem;
+}

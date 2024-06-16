@@ -22,14 +22,7 @@ db.sleepReport = require("./sleep_report.js")(sequelize, Sequelize);
 db.exerciseReport = require("./exercise_report.js")(sequelize, Sequelize);
 db.diary = require("./diary.js")(sequelize, Sequelize);
 
-<<<<<<< feature/#19
-//db.prescription.sync({force: true});
-//db.prescriptionReport.sync({force: true});
-//db.prescription_prescriptionReport.sync({force: true});
 
-
-=======
->>>>>>> main
 /*
  * 모델 간 연관관계 설정
 */
@@ -76,15 +69,5 @@ db.comment.belongsTo(db.post, {foreignKey: 'post_id'});
 // 댓글 : 댓글 (1:N) 자기참조 관계     
 db.comment.belongsTo(db.comment, {foreignKey: 'parent_id'});
 
-<<<<<<< feature/#19
-// db.prescription.sync({force: true});
-// db.prescriptionReport.sync({force: true});
-// sequelize.sync({force: true});
-=======
-                               
-// db.diary.sync({force:true});
-
-
->>>>>>> main
 
 module.exports = db;
