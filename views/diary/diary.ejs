@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="/stylesheets/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/diary.css">
 </head>
 <body>
@@ -14,9 +15,10 @@
             <section class="diary-entry">
                 <div class="photo">
                     <div class="photo-frame">
-                        <img class="photo-of-the-day" src="image_placeholder.jpg">
+                        <img class="photo-of-the-day" src="https://storage.googleapis.com/spring-image/default.jpg">
                     </div>
-                    <button class="photo-button" onclick="addPhoto()">+</button>
+                    <input type="file" id="photoInput" style="display: none;" accept="image/*" onchange="addPhoto(event)">
+                    <button class="photo-button" onclick="document.getElementById('photoInput').click()">+</button>
                 </div>
                 <div class="entry">
                     <div class="entry-inputs">
@@ -24,6 +26,7 @@
                             <label for="date">
                             <input type="date" id="date" name="date" onchange="loadDiaryEntry()">
                         </div>
+                        <input class="diary-id" type="hidden" value="">
                         <div class="input-group">
                             <label for="weather">
                             <input type="text" id="weather" name="weather" placeholder="오늘의 날씨">
@@ -31,14 +34,25 @@
                     </div>
                     <textarea id="diary-text" placeholder="오늘 하루는 어땠나요?"></textarea>
                     <div class="buttons">
-                        <button class="save-button">저장하기</button>
+                        <button class="save-button" onclick="saveDiary()">저장하기</button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
-    <!-- <script src="scripts.js"></script> -->
     <script>
+        function getRandomDiaryPrompt() {
+            const prompts = [
+                "오늘 하루는 어땠나요?",
+                "기분 좋은 일이 있었나요?",
+                "오늘 있었던 특별한 순간을 기록해보세요.",
+                "하루 중 기억에 남는 일이 무엇인가요?",
+                "오늘 느꼈던 감정을 적어보세요."
+            ];
+            const randomIndex = Math.floor(Math.random() * prompts.length);
+            return prompts[randomIndex];
+        }
+
         function getTodayDate() {
             const today = new Date();
             const year = today.getFullYear();
@@ -50,24 +64,144 @@
         document.addEventListener('DOMContentLoaded', () => {
             const dateInput = document.getElementById('date');
             dateInput.max = getTodayDate();
+
+            const diaryText = document.getElementById('diary-text');
+            diaryText.placeholder = getRandomDiaryPrompt(); 
         });
 
         function loadDiaryEntry() {
             const date = document.getElementById('date').value;
             if (date) {
-                fetch(`/diary/${date}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            document.getElementById('weather').value = data.weather;
-                            document.getElementById('diary-text').value = data.text;
-                        } else {
-                            document.getElementById('weather').value = '';
-                            document.getElementById('diary-text').value = '';
+                fetch(`/diary/${date}`, {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('.diary-id').value = '';
+                    document.getElementById('weather').value = '';
+                    document.getElementById('diary-text').value = '';
+                    document.querySelector(".photo-of-the-day").setAttribute("src", "https://storage.googleapis.com/spring-image/default.jpg");
+
+                    if (Object.keys(data.diary).length != 0) {
+                        document.querySelector('.diary-id').value = data.diary.diary_id || '';
+                        document.getElementById('weather').value = data.diary.weather || '';
+                        document.getElementById('diary-text').value = data.diary.contents || '';
+                        if (data.diary.photo) {
+                            currentPhotoURL = data.diary.photo;
+                            document.querySelector(".photo-of-the-day").setAttribute("src", data.diary.photo);
                         }
-                    })
-                    .catch(error => console.error('Error fetching diary entry:', error));
+                        else {
+                            document.querySelector(".photo-of-the-day").setAttribute("src", "https://storage.googleapis.com/spring-image/default.jpg");
+                        }
+                    } else {
+                        const diaryText = document.getElementById('diary-text');
+                      //  diaryText.placeholder = getRandomDiaryPrompt();
+                    }
+              
+              })
+                .catch(error => console.error('Error fetching diary entry:', error));
             }
+        }
+
+        function getFileNameFromURL(url) {
+            // URL 객체를 생성합니다.
+            const urlObj = new URL(url);
+            // URL 객체의 pathname 속성을 사용하여 경로를 얻습니다.
+            const pathname = urlObj.pathname;
+            // 경로를 '/'로 분할하여 마지막 요소를 파일명으로 가져옵니다.
+            const fileName = pathname.split('/').pop();
+            return fileName;
+        }
+
+        function saveDiary() {
+            const userID = 1;
+            const diaryID = document.querySelector('.diary-id').value;
+            const date = document.getElementById('date').value;
+            const weather = document.getElementById('weather').value;
+            const contents = document.getElementById('diary-text').value;
+            const photoInput = document.getElementById('photoInput');
+            const photoFile = photoInput.files[0];
+
+            const formData = new FormData();
+            formData.append('userID', userID);
+            if (diaryID) {
+                formData.append('diaryID', diaryID);
+            }
+            formData.append('date', date);
+            formData.append('weather', weather);
+            formData.append('contents', contents);
+            if (photoFile) {
+                formData.append('photo', photoFile);
+            } else {
+                formData.append('existingPhotoUrl', currentPhotoURL); // 새 사진이 없을 때 기존 사진 URL 사용
+            }
+
+
+            fetch('/diary', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving diary entry:', error);
+                alert(`저장 중 오류가 발생했습니다: ${error.message}`);
+            });
+        }
+
+        function updateDiary() {
+            const date = document.getElementById('date').value;
+            const weather = document.getElementById('weather').value;
+            const contents = document.getElementById('diary-text').value;
+            const photoInput = document.getElementById('photoInput');
+            const photoFile = photoInput.files[0];
+            
+            const formData = new FormData();
+            formData.append('date', date);
+            formData.append('weather', weather);
+            formData.append('contents', contents);
+            if (photoFile) {
+                formData.append('photo', photoFile);
+            }
+
+            fetch(`/diary/${date}`, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error('Error updating diary entry:', error));
+        }
+
+        function addPhoto(event) {
+            if (event.target.files.length === 0) return;
+
+            var reader = new FileReader();
+
+            reader.onload = function(event) {
+                document.querySelector(".photo-of-the-day").setAttribute("src", event.target.result);
+                console.log('Photo URL:', event.target.result);
+            };
+
+            reader.onerror = function(error) {
+                console.error('Error reading file:', error);
+                alert('사진을 읽는 중 오류가 발생했습니다.');
+            };
+
+            reader.readAsDataURL(event.target.files[0]);
         }
     </script>
 </body>

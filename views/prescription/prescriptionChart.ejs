@@ -1,53 +1,100 @@
 <!DOCTYPE html>
-
-<canvas class="chart" id="line-chart"></canvas>
+<div>
+<canvas class="chart" id="line-chart" >
+</canvas>
+<div id="data" type="hidden" data-href="<%= JSON.stringify(chart) %>">
 
 <script>
-    new Chart(document.getElementById("line-chart"), {
-    type: 'line',
-    data: {
-        labels: [2024.01, 2024.02, 2024.03, 2024.04, 2024.05, 2024.06],
-        datasets: [{ 
-            data: [5,4,3,4,3,2],
-            label: "빨간약",
-            fill: false,
-            borderColor: 'rgba(201, 52, 172, 1)',
-            pointRadius: 8
-        }, { 
-            data: [3,3,5,6,7,5],
-            label: "파란약",
-            borderColor: 'rgba(75, 192, 192, 1)',
-            fill: false,
-            pointRadius: 8
+        document.addEventListener("DOMContentLoaded", function() {
+            // 데이터 파싱
+            var data = document.getElementById("data").getAttribute('data-href');
+            data = JSON.parse(data);
+
+            // 라벨 생성 (날짜)
+            const labels = [];
+            const datasets = [];
+
+            // 데이터를 순회하며 datasets 생성
+            for (const prescriptionName in data) {
+                if (data.hasOwnProperty(prescriptionName)) {
+                    const prescriptionData = data[prescriptionName];
+
+                    const prescriptionDataset = {
+                        label: prescriptionName,
+                        data: [],
+                        borderColor: getRandomColor(),
+                        fill: false,
+                        pointRadius: 8
+                    };
+
+                    prescriptionData.forEach(entry => {
+                        const date = entry.prescription_date;
+                        const amount = entry.prescription_amount;
+
+                        // 날짜가 라벨에 없으면 추가
+                        if (!labels.includes(date)) {
+                            labels.push(date);
+                        }
+
+                        prescriptionDataset.data.push({ x: new Date(date), y: amount });
+                    });
+
+                    datasets.push(prescriptionDataset);
+                }
+            }
+
+            // 라벨 정렬
+            labels.sort((a, b) => new Date(a) - new Date(b));
+
+            // 차트 생성
+            new Chart(document.getElementById("line-chart"), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                   // 반응형으로 설정
+                    title: {
+                        display: true,
+                        text: '처방량 변화 그래프'
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'month',
+                                tooltipFormat: 'YYYY.MM',
+                                displayFormats: {
+                                    month: 'YYYY.MM'
+                                }
+                            },
+                            ticks: {
+                                fontSize: 20
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                min: 0,
+                                fontSize: 17
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // 랜덤 컬러 생성 함수
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
-        ]
-    },
-    options: {
-        responsive: false, //사이즈 적용
-        title: {
-        display: true,
-        text: '복용량 변화 그래프'
-        },
-        scales: {
-            xAxes: [{
-                ticks:{
-                    fontSize: 20
-                }
-            }],
-            yAxes: [{
-                ticks: {
-                    min: 0,
-                    max: 8,
-                    fontSize : 17
-                }
-            }]
-		},
-        element: {
-            pointRadius: 10
-        }  
-    }
-    });
-
-
-
 </script>
+
+    
+  
+</div>

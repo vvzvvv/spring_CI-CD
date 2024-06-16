@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/diary',require('./diary'));
 router.use('/test',require('./test'));
+router.use('/prescription',require('./prescription'));
 router.use('/sleep',require('./sleep'));
 
 module.exports = router;
