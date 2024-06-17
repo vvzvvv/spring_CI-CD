@@ -37,7 +37,7 @@ const saveExercise = async (evaluation, exercise_date, start_time_hour, start_ti
     }
 };
 
-const getExerciseList = async (userID, date) => {
+const getExerciseByDate = async (userID, date) => {
     try {
         const data = await db.exerciseReport.findAll({
             where: {
@@ -68,6 +68,6 @@ const getExercise = async (exerciseID) => {
 
 module.exports = {
     saveExercise,
-    getExerciseList,
+    getExerciseByDate,
     getExercise,
 };

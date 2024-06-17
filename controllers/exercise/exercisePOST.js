@@ -1,21 +1,16 @@
 const db = require('../../models/index');
+const authenticateToken = require("../../authenticateToken");
 
 // 운동 기록 저장
 const saveExercise = async (req, res) => {
     try {
         const { evaluation, exercise_date, start_exercise_time, end_exercise_time, exercise_type, comments, user_id } = req.body;
-        
-        console.log(evaluation);
 
-        console.log(exercise_date);
-        console.log(start_exercise_time);
-        console.log(end_exercise_time);
-        console.log(exercise_type);
-        console.log(comments);
-        //const duration = (new Date(endTime) - new Date(startTime)) / 60000; // 시간 차이(분 단위) 계산
-        console.log("저장요청");
+        const authHeader = req.headers.authorization;
+        const token = authHeader.split(' ')[1];
         
-        const userID = 1;
+        const userID = await authenticateToken(token);
+        console.log(userID);
 
         const report = await db.exerciseReport.create({
             exercise_rate : evaluation, 
