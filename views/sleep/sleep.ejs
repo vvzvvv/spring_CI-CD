@@ -65,6 +65,20 @@
             loadSleepChart();
         });
 
+        // 토큰 유무 확인 로직
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                console.log('Token exists in localSotrage: ', token);
+            }
+            else {
+                console.log('Token does not exist in localStorage');
+                window.location.href = '/user/login';
+            }
+        });
+
+
 
         function loadSleepChart() {
             fetch('/sleep/last7days', {
