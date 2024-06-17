@@ -65,6 +65,11 @@ a:visited{
     align-items: center;
 }
 
+.sleep a {
+    text-decoration-line: none;
+}
+
+
 .exercise {
     display: flex;
     gap: 2.6rem;
