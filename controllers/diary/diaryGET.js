@@ -1,11 +1,18 @@
 const diaryQuery = require('../../models/diaryQuery');
+const authenticateToken = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     const { date } = req.params;
     console.log(date);
+
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    const userID = await authenticateToken(token);
+
     try {
         console.log('일기 불러오기 요청:', date);
-        const entry = await diaryQuery.getDiaryEntry(date);
+        const entry = await diaryQuery.getDiaryEntry(date, userID);
+
         var diary = {};
         if (Object.keys(entry).length != 0) {
             diary = entry.get(0);
