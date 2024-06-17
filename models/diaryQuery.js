@@ -1,10 +1,9 @@
 const { where } = require('sequelize');
 const db = require('./index');
 
-async function saveDiaryEntry(userID, diaryID, date, weather, contents, photoUrl) {
+async function saveDiaryEntry(userID, date, weather, contents, photoUrl) {
     try {
         const [entry, created] = await db.diary.upsert({
-            diary_id: diaryID,
             diary_date: date,
             weather: weather,
             contents: contents,
@@ -19,9 +18,9 @@ async function saveDiaryEntry(userID, diaryID, date, weather, contents, photoUrl
     }
 }
 
-async function getDiaryEntry(date) {
+async function getDiaryEntry(date, userID) {
     try {
-        const entry = await db.diary.findOne({ where: { diary_date: date } });
+        const entry = await db.diary.findOne({ where: { diary_date: date, user_id: userID} });
         return entry || {}; // 데이터가 없으면 빈 객체를 반환
     } catch (error) {
         console.error('일기 불러오기 중 오류 발생:', error);

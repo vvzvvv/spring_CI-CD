@@ -41,6 +41,11 @@
         </main>
     </div>
     <script>
+
+        const token = localStorage.getItem('token');    // 토큰 불러오기
+        console.log(token);
+
+
         function getRandomDiaryPrompt() {
             const prompts = [
                 "오늘 하루는 어땠나요?",
@@ -69,11 +74,30 @@
             diaryText.placeholder = getRandomDiaryPrompt(); 
         });
 
+        // 프론트에서 토큰 유무 확인
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                console.log('Token exists in localSotrage: ', token);
+            }
+            else {
+                console.log('Token does not exist in localStorage');
+                window.location.href = '/user/login';
+            }
+        });
+
+
+        
+
         function loadDiaryEntry() {
             const date = document.getElementById('date').value;
             if (date) {
                 fetch(`/diary/${date}`, {
                     method: 'GET',
+                    headers: {
+                    'Authorization': `Bearer ${token}`
+                    }
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -97,8 +121,7 @@
                         const diaryText = document.getElementById('diary-text');
                       //  diaryText.placeholder = getRandomDiaryPrompt();
                     }
-              
-              })
+                })
                 .catch(error => console.error('Error fetching diary entry:', error));
             }
         }
@@ -114,7 +137,6 @@
         }
 
         function saveDiary() {
-            const userID = 1;
             const diaryID = document.querySelector('.diary-id').value;
             const date = document.getElementById('date').value;
             const weather = document.getElementById('weather').value;
@@ -123,7 +145,6 @@
             const photoFile = photoInput.files[0];
 
             const formData = new FormData();
-            formData.append('userID', userID);
             if (diaryID) {
                 formData.append('diaryID', diaryID);
             }
@@ -139,7 +160,10 @@
 
             fetch('/diary', {
                 method: 'POST',
-                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
             })
             .then(response => {
                 if (!response.ok) {
@@ -203,6 +227,9 @@
 
             reader.readAsDataURL(event.target.files[0]);
         }
+
+
+       
     </script>
 </body>
 </html>
