@@ -1,10 +1,9 @@
 const { where } = require('sequelize');
 const db = require('./index');
 
-async function saveDiaryEntry(userID, diaryID, date, weather, contents, photoUrl) {
+async function saveDiaryEntry(userID, date, weather, contents, photoUrl) {
     try {
         const [entry, created] = await db.diary.upsert({
-            diary_id: diaryID,
             diary_date: date,
             weather: weather,
             contents: contents,
