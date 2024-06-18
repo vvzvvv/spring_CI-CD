@@ -7,12 +7,7 @@ module.exports = async (req, res) => {
         const userID = 1;
         //console.log(userID);
         const result = await getPrescriptionContent(userID);
-        // const data = [];
-        // for(var medicine of result){
-        //     data.push(medicine.get(0));
-        // }
-        // console.log(data[0]);
-        // return data[0];
+
         return result;
     }
     catch(err) {
