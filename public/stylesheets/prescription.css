@@ -1,5 +1,4 @@
-/* Popup css */
-.popup-prescription, .popup-record {
+.popup-prescription, .popup-record, .popup-edit  {
     visibility: hidden;
     opacity: 0;
     position: fixed;
@@ -9,63 +8,100 @@
     width: 40rem;
     background-color: white;
     border: 1px solid #ccc;
+    border-radius: 2rem;
     padding: 2rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     transition: visibility 0.3s, opacity 0.3s;
+    display: flex;
+    text-align: center;
 }
 
-.prescription-form, .record-form {
+.prescription-form, .record-form, .edit-form {
     display: flex;
     flex-direction: column;
-}
-
-.prescription-form input, .prescription-form select, .record-form input, .record-form select {
-    margin-bottom: 2rem;
-    width: 60%;
-    padding: 5px;
-    margin-bottom: 5px;
-}
-
-.prescription-form button, .record-form button {
-    margin-top: 10px;
-    align-self: flex-end;
-    padding: 0.5rem 1rem;
-}
-
-.prescription-form, .record-form { 
     list-style-type: none;
     padding: 10 10 10 10 ;
 }
 
-.prescription-form form, .record-form form {
+.prescription-form input, .record-form input, .edit-form input  {
+    margin-bottom: 2rem;
+    width: 60%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1.5px solid #0c5401;
+    border-radius: 1rem;
+}
+.record-form select {
+    margin-bottom: 2rem;
+    width: 63.5%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1.5px solid #0c5401;
+    border-radius: 1rem;
+}
+
+.prescription-form button, .record-form button, .edit-form button {
+    margin-top: 10px;
+    align-self: flex-end;
+    padding: 0.5rem 1rem;
+    background-color: #DBE6D9;
+    border-radius: 1rem;
+    border: 1.5px solid #0c5401;
+}
+
+.prescription-form form, .record-form form, .edit-form form {
     /* display: flex; */
     flex-direction: column;
     margin-bottom: 1rem;
 }
 
-.add-button, .add-button-record {
+.add-button, .add-button-record, .add-button-edit, .button-edit{
     display: block;
     margin: 1rem auto;
     padding: 1rem 2rem;
 }
 
-.close-btn, .close-btn-record { 
+.close-btn-delete, .close-delete {
+    float: left;
+    color: red;
+}
+
+.close-btn, .close-btn-record, .close-btn-edit, .close-edit { 
     float: right;
     cursor: pointer;
 }
 
-
 body {
     margin: 40rem 2rem 20rem 2rem;
     display: flex;
+
+}
+
+p {
+    font-size: 13px;
+    margin-top: 1rem;
+}
+
+.chart-box {
+    background-color: #FAFAFA;
+    border: 0.2rem solid #E3E2E2;
+    border-radius: 1rem;
+    width: 122rem;
+    height : 30rem;
+    padding : 10rem;
+    margin-top: -17rem;
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
 }
 
 .prescription-container {
     position: absolute;
-    top: 68.2rem;
+    margin-top: 2rem;
+    margin-left: 3rem;
     display: flex;
     justify-content: space-around;
-    gap: 6.3rem;
+    gap: 5rem;
 }
 
 .prescription-list-content{
@@ -86,25 +122,16 @@ body {
 .prescription-object div, .record-object div{
     display: flex;
     margin-left: 3rem;
-    margin-top: 0.5rem;
-    gap: 5rem;
+    gap: 4rem;   
 }
 
 .container h2 {
     text-align: left;
 }
 
-.section-prescription {
+.section-prescription, .section-record {
     background-color: #FAFAFA;
-    /* width: 59.3rem; */
-    width: 67.3rem;
-    border-radius: 1rem;
-    border: 0.2rem solid #E3E2E2;
-}
-
-.section-record {
-    background-color: #FAFAFA;
-    width: 67.3rem;
+    width: 68.3rem;
     border-radius: 1rem;
     border: 0.2rem solid #E3E2E2;
 }
@@ -120,7 +147,11 @@ body {
 .record-title button, .prescription-title button{
     width: 16.1rem;
     height: 3.2rem;
-    margin-top: 1.8rem;
+    margin-top: 1.5rem;
+    margin-left: 0.8rem;
+    background-color: #DBE6D9;
+    border-radius: 1rem;
+    border: 0.2rem solid #0c5401;
 }
 
 .record-list h1, .prescription-list h1  { /* 약 이름 */
@@ -132,100 +163,4 @@ hr {
     width: 92%;
 }
 
-/* .chart { 
-    position: absolute;
-    width: 140rem;
-    height:40rem;
-    margin-top: -17rem;
-    margin-left: 3rem;
-} */
 
-#line-chart{
-    width: 280px;
-    height: 800px;
-    margin-top: -17rem;
-}
-
-.view-container {
-    display: flex;
-}
-
-/* 달력 */
-/* .cal {
-    width: 67.3rem;
-    margin-top: -13rem;
-    border-radius: 1rem;
-    border: 0.2rem solid #E3E2E2;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f0f0f0;
-    color: darkgreen;
-}
-.nav-btn {
-    background-color: #DBE6D9;;
-    color: darkgreen;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-.year-month {
-    font-size: 1.2em;
-}
-.main {
-    border: 1px solid #ddd;
-}
-.days {
-    display: flex;
-    background-color: #f0f0f0;
-    padding: 10px 0;
-}
-.day, .date {
-    flex: 1;
-    text-align: center;
-    padding: 10px 0;
-}
-.dates {
-    display: flex;
-    height: 26rem;
-    flex-wrap: wrap;
-}
-.date {
-    width: calc(100% / 7);
-    box-sizing: border-box;
-    padding: 1rem 0;
-    height: 26rem;
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1;
-    text-align: center;
-
-}
-
-.date span.this {
-    color: black;
-}
-.date span.other {
-    color: #ccc;
-}
-.today {
-    position: relative;
-    color: #fff;
-}
-.today::before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    width: 2rem;
-    height: 2rem;
-    display: block;
-    background-color: darkgray;
-    border-radius: 50%;
-    content: '';
-} */
