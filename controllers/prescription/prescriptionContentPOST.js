@@ -1,9 +1,14 @@
 const {postPrescriptionContent} = require("../../models/prescriptionQuery");
+const authenticateToken = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     try {
-        const userID = 1;
-
+        const authHeader = req.headers.authorization;
+        let userID;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            userID = await authenticateToken(token);
+        } 
         const {name, date, amount} = req.body;
         
         const data = await postPrescriptionContent(name, date, amount, userID);
