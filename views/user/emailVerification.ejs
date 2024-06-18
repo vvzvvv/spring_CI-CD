@@ -16,29 +16,18 @@
               <b>이메일</b>
             </div>
 
-            <div class = "email-form-inline">
+            <div>
               <input type = "text" name = "email" required>
             </div>
 
-            <div class = "button-form-inline">
-              <input type = "submit" value = "전송">
-            </div>
-
           </div>
+          <br>
+          <br>
           <br>
           <br>
 
           <div>
-            <div class = "text">
-              <b>인증번호</b>
-            </div>
-            <input type = "text" name = "code" value="">
-          </div>
-          <br>
-          <br>
-
-          <div>
-            <input class="button" type="submit" value="인증하기">
+            <input class="button" type="submit" value="전송">
           </div>
         </form>
 
@@ -60,6 +49,11 @@
             },
             body: JSON.stringify({email})
           }); 
+
+          if (response.status == 200) {
+            alert('비밀번호 초기화 링크를 입력하신 이메일로 전송하였습니다.\n이메일을 확인해주세요.');
+            window.location.href = '/user/login';
+          }
         } catch (error) {
           console.error('Error: ', err);
           alert('나중에 다시 시도해주세요.');
