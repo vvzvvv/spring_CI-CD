@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <div>
-<canvas class="chart" id="line-chart" >
-</canvas>
+
+<div class="chart-box">
+<canvas class="chart" id="line-chart" width="1500px" height="500px" ></canvas>
+</div>
 <div id="data" type="hidden" data-href="<%= JSON.stringify(chart) %>">
 
 <script>
@@ -13,8 +15,10 @@
             // 라벨 생성 (날짜)
             const labels = [];
             const datasets = [];
+            const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#E7E9ED', '#76A346'];
 
             // 데이터를 순회하며 datasets 생성
+            let colorIndex = 0;
             for (const prescriptionName in data) {
                 if (data.hasOwnProperty(prescriptionName)) {
                     const prescriptionData = data[prescriptionName];
@@ -22,7 +26,7 @@
                     const prescriptionDataset = {
                         label: prescriptionName,
                         data: [],
-                        borderColor: getRandomColor(),
+                        borderColor: colors[colorIndex % colors.length],
                         fill: false,
                         pointRadius: 8
                     };
@@ -40,6 +44,7 @@
                     });
 
                     datasets.push(prescriptionDataset);
+                    colorIndex++;
                 }
             }
 
@@ -59,7 +64,7 @@
                         display: true,
                         text: '처방량 변화 그래프'
                     },
-                    scales: {
+                    scales: {  
                         x: {
                             type: 'time',
                             time: {
@@ -70,7 +75,7 @@
                                 }
                             },
                             ticks: {
-                                fontSize: 20
+                                //fontSize: 20
                             }
                         },
                         y: {
@@ -84,15 +89,6 @@
             });
         });
 
-        // 랜덤 컬러 생성 함수
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 </script>
 
     
