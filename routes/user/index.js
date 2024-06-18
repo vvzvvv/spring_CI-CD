@@ -31,7 +31,9 @@ router.post('/join/emailChecking', emailCheckingPOST);
 /*
 비밀번호 변경 관련 라우트
 */
-//router.get('/password/emailVerification', userController.emailVerificationView);    // 요청 url: localhost:3000/users/password/emailVerification
+router.get('/emailVerification', function(req, res) {
+  res.render("user/emailVerification");
+});
 
 //router.get('/password/change', userController.changePasswordView);    // 요청 url: localhost:3000/users/password/change
 
