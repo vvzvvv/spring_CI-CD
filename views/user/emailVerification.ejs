@@ -7,42 +7,65 @@
 
 
   <body class = "user-background">
-
     <div class = "user">
         <img class = "logo" src="/images/spring_user_logo.png">
 
-        <form class = "form" action="/users/emailVerification" method="post">
-            <div>
-              <div class = "text">
-                <b>이메일</b>
-              </div>
-
-              <div class = "email-form-inline">
-                <input type = "text" name = "email" value="">
-              </div>
-
-              <div class = "button-form-inline">
-                <input type = "submit" value = "전송">
-              </div>
-
-            </div>
-            <br>
-            <br>
-
-            <div>
-              <div class = "text">
-                <b>인증번호</b>
-              </div>
-              <input type = "text" name = "code" value="">
-            </div>
-            <br>
-            <br>
-
-            <div>
-              <input class="button" type="submit" value="인증하기">
+        <form id="emailVerification-form" class = "form">
+          <div>
+            <div class = "text">
+              <b>이메일</b>
             </div>
 
+            <div class = "email-form-inline">
+              <input type = "text" name = "email" required>
+            </div>
+
+            <div class = "button-form-inline">
+              <input type = "submit" value = "전송">
+            </div>
+
+          </div>
+          <br>
+          <br>
+
+          <div>
+            <div class = "text">
+              <b>인증번호</b>
+            </div>
+            <input type = "text" name = "code" value="">
+          </div>
+          <br>
+          <br>
+
+          <div>
+            <input class="button" type="submit" value="인증하기">
+          </div>
         </form>
+
     </div>
+
+    <script>
+      document.getElementById('emailVerification-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const email = formData.get('email');
+        
+        try {
+          const response = await fetch('/user/password/emailVarificaiton', {
+            method: 'POST',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({email})
+          }); 
+        } catch (error) {
+          console.error('Error: ', err);
+          alert('나중에 다시 시도해주세요.');
+        }
+      });
+    </script>
+
   </body>
 </html>
