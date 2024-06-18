@@ -25,18 +25,34 @@
 
 </body>
 <script>
+    document.addEventListener('DOMContentLoaded', function() 
+    {
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetch('/prescription/refresh', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // refresh 요청이 성공하면 '/' 경로로 재요청
+                    fetch('/prescription')
+                } else {
+                    alert('새로고침을 눌러주세요');
+                    throw new Error('Failed to authenticate token');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        else {
+            console.log('Token does not exist in localStorage');
+            window.location.href = '/user/login';
+        }
+    })
 
-
-        // document.addEventListener('DOMContentLoaded', function() {
-        // const token = localStorage.getItem('token');
-
-        // if (token) {
-        //     console.log('Token exists in localSotrage: ', token);
-        // }
-        // else {
-        //     console.log('Token does not exist in localStorage');
-        //     window.location.href = '/user/login';
-        // }
-        // })
+    
 </script>
 </html>

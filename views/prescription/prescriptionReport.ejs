@@ -102,10 +102,12 @@
         const time = document.getElementById('report-time').value;
         const prescriptionID = document.getElementById('report-select').value;
         
+        const token = localStorage.getItem('token');
         fetch('/prescription/report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ date, time, prescriptionID }),
         })
@@ -113,6 +115,7 @@
         .then(data => {
             if (data.status) {
                 alert('복용 기록이 성공적으로 추가되었습니다.');
+                window.reload();
                 closePopupReport();
             } else {
                 alert('복용 기록 추가에 실패했습니다.');
@@ -120,7 +123,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('복용 기록 추가 중 오류가 발생했습니다.');
+        
         });
 
         return true; // 폼 제출
@@ -129,7 +132,7 @@
     // 복용 기록 수정
     function openPopupReportEdit(name, date, time, reportID, amount) {
         var popup = document.getElementById("popupReportEdit");
-        document.getElementById("edit-prescription-name").value = name + ' ' + amount + 'mg';
+        document.getElementById("edit-prescription-name").value = name;
         document.getElementById("edit-report-date").value = date;
         document.getElementById("edit-report-time").value = time;
         document.getElementById("reportID").value = reportID;
@@ -164,6 +167,7 @@
         .then(data => {
             if (data.status) {
                 alert('복용 기록이 성공적으로 수정되었습니다.');
+                window.reload();
                 closePopupReportEdit();
             } else {
                 alert('복용 기록 수정에 실패했습니다.');
@@ -171,7 +175,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('복용 기록 수정 중 오류가 발생했습니다.');
+            
         });
 
         return true; // 폼 제출
@@ -196,6 +200,7 @@
         .then(data => {
             if (data.status) {
                 alert('복용 기록이 성공적으로 삭제되었습니다.');
+                window.reload();
                 closePopupReportEdit();
             } else {
                 alert('복용 기록 삭제에 실패했습니다.');
@@ -203,7 +208,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('복용 기록 삭제 중 오류가 발생했습니다.');
+            
         });
 
         return true; // 폼 제출

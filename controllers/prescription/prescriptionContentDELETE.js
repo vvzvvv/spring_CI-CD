@@ -2,10 +2,9 @@ const {deletePrescriptionContent} = require("../../models/prescriptionQuery");
 
 module.exports = async (req, res) => {
     try {
-        const userID = 1;
         const { prescriptionID } = req.params;
 
-        const data = await deletePrescriptionContent(userID, prescriptionID);
+        const data = await deletePrescriptionContent(prescriptionID);
         
         if(data.error){
             console.log(data.error);

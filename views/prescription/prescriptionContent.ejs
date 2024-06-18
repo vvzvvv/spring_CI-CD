@@ -85,10 +85,12 @@
         const date = document.getElementById('prescription-date').value;
         const amount = document.getElementById('prescription-amount').value;
 
+        const token = localStorage.getItem('token');
         fetch('/prescription/content', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ name, date, amount }),
         })
@@ -96,6 +98,7 @@
         .then(data => {
             if (data.status) {
                 alert('처방약이 성공적으로 추가되었습니다.');
+                window.reload();
                 closePopup();
             } else {
                 alert('처방약 추가에 실패했습니다.');
@@ -103,7 +106,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('처방약 추가 중 오류가 발생했습니다.');
+        
         });
         return true; // 폼 제출 (새로고침)
     }
@@ -147,6 +150,7 @@
         .then(data => {
             if (data.status) {
                 alert('처방약 정보가 성공적으로 수정되었습니다.');
+                window.reload();
                 closePopupEdit();
             } else {
                 alert('처방약 수정에 실패했습니다.');
@@ -154,7 +158,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('처방약 수정 중 오류가 발생했습니다.');
+        
         });
 
         return true; // 폼 제출
@@ -179,6 +183,7 @@
         .then(data => {
             if (data.status) {
                 alert('처방약이 성공적으로 삭제되었습니다.');
+                window.reload();
                 closePopupEdit();
             } else {
                 alert('처방약 삭제에 실패했습니다.');
@@ -186,7 +191,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('처방약 삭제 중 오류가 발생했습니다.');
+        
         });
 
         return true; // 폼 제출
