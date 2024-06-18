@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            console.log('Token exists in localSotrage: ', token);
+            fetch('/test/list', {
+                method: 'GET', // or 'GET'
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderTestList(data)
+            })
+        }
+    
         var rows = document.querySelectorAll('.list-content');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
@@ -12,21 +28,54 @@
                 }
             });
         });
-    });
+
+    })
+
+    function renderTestList(testList) {
+            const testListContainer = document.getElementById('testListContainer');
+            testListContainer.innerHTML = ''; // 기존 내용을 지웁니다.
+
+            testList.forEach(test => {
+                const row = document.createElement('tr');
+                row.classList.add('list-content');
+                row.setAttribute('data-href', test.test_id);
+
+                const dateCell = document.createElement('td');
+                dateCell.textContent = test.test_date;
+                row.appendChild(dateCell);
+
+                const scoreCell = document.createElement('td');
+                scoreCell.textContent = test.total_score;
+                row.appendChild(scoreCell);
+
+                testListContainer.appendChild(row);
+            });
+
+            // 이벤트 리스너를 새로 추가합니다.
+            var rows = document.querySelectorAll('.list-content');
+            rows.forEach(function(row) {
+                row.addEventListener('click', function() {
+                    var href = this.getAttribute('data-href');
+                    if (href) {
+                        window.location.pathname = `test/${href}`;
+                    }
+                });
+            });
+        }
 </script>
 <div class="test-list">
     <h1 class="test-name">테스트 결과</h1>
     <!-- 테이블 필요 -->
     <table class="test-head">
-        <tr class="list-head" scope="col">
-            <th>일자</th>
-            <th>점수</th>
-        </tr>
-        <% for(var i = 0; i<testList.length; i++){ %>
-            <tr class="list-content" data-href="<%= testList[i].test_id %>">
-                <td><%= testList[i].test_date %></td>
-                <td><%= testList[i].total_score %></td>
+        <thead>
+            <tr class="list-head" scope="col">
+                <th>일자</th>
+                <th>점수</th>
             </tr>
-        <% } %>
+        </thead>
+
+        <tbody id="testListContainer">
+
+        </tbody>
     </table>
 </div>

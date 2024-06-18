@@ -51,58 +51,62 @@
                 questionScore += Number(question.value);
                 resultArray.push(question.value);
             });
-            var resultString = resultArray.toString().replaceAll(',','');
-            console.log(resultString);
+            if(resultArray.length != 9){
+                alert("체크하지 않은 질문이 있습니다.");
+            }
+            else{
+                var resultString = resultArray.toString().replaceAll(',','');
+                console.log(resultString);
 
-            // TODO : 서버로 결과 폼 내용 보내기()
-            // 서버로 데이터 전송하기
-            var dataToSend = {
-                date: todayString.replaceAll('.','-'),
-                score: questionScore,
-                resultString: resultString
-            };
-            
-            const token = localStorage.getItem('token');
-            console.log('token: ', token);
+                // TODO : 서버로 결과 폼 내용 보내기()
+                // 서버로 데이터 전송하기
+                var dataToSend = {
+                    date: todayString.replaceAll('.','-'),
+                    score: questionScore,
+                    resultString: resultString
+                };
+                
+                const token = localStorage.getItem('token');
+                console.log('token: ', token);
 
-            const row = fetch('/test', { 
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(dataToSend)
-            })
-            .then(result => result.json())
-            .then(data => {
-                console.log('Success:', data);
-                if(data.status == 'fail'){
+                const row = fetch('/test', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(dataToSend)
+                })
+                .then(result => result.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    if(data.status == 'fail'){
+                        window.location.href = `/test/${data.data.test_id}`;
+                        window.alert("오늘 이미 테스트를 진행했습니다. \n오늘 작성한 테스트 결과를 확인하세요!");
+                    }
+                    else{
+                        return data;
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+                row.then((data) => {
+                    console.log('Response in final then:', data.data);
                     window.location.href = `/test/${data.data.test_id}`;
-                    window.alert("오늘 이미 테스트를 진행했습니다. \n오늘 작성한 테스트 결과를 확인하세요!");
-                }
-                else{
-                    return data;
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                });
 
-            row.then((data) => {
-                console.log('Response in final then:', data.data);
-                window.location.href = `/test/${data.data.test_id}`;
-            });
+                let resultData;
+                if(questionScore<=4) resultData = result[0];
+                else if(questionScore<=9) resultData = result[1];
+                else if(questionScore<=14) resultData = result[2];
+                else if(questionScore<=19) resultData = result[3];
+                else resultData = result[4];
 
-            let resultData;
-            if(questionScore<=4) resultData = result[0];
-            else if(questionScore<=9) resultData = result[1];
-            else if(questionScore<=14) resultData = result[2];
-            else if(questionScore<=19) resultData = result[3];
-            else resultData = result[4];
-
-            document.getElementsByClassName("result-title")[0].innerHTML = resultData.title;
-            document.getElementsByClassName("result-content")[0].innerHTML = resultData.resultContent;
-
+                document.getElementsByClassName("result-title")[0].innerHTML = resultData.title;
+                document.getElementsByClassName("result-content")[0].innerHTML = resultData.resultContent;
+        }
             // location.href = `/test/${resultData.test_id}
             // location.reload();
             // console.log(location.href);

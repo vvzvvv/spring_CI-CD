@@ -6,13 +6,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', async (req, res)=>{
-  const testList = await testListGET();
-  res.render('test/test',{testList: testList});
+  res.render('test/test');
 });
 router.post('/',testPOST)
+router.get('/list', testListGET);
+router.get('/content', testGET);
+
 router.get('/:testID', async (req, res)=>{
-  const testList = await testListGET();
   const testResult = await testGET(req, res);
-  res.render('test/testResult',{testList: testList, testResult: testResult});
+  res.render('test/testResult',{testResult: testResult});
 })
 module.exports = router;
