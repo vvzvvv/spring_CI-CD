@@ -1,8 +1,12 @@
 const { getLast7DaysSleepData } = require('../../models/sleepQuery');
+const authenticateToken = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     try {
-        const userId = 1;
+        const authHeader = req.headers.authorization;
+        const token = authHeader.split(' ')[1];
+        const userId = await authenticateToken(token);
+
         const sleepData = await getLast7DaysSleepData(userId);
         res.status(200).json(sleepData);
     } catch (err) {
