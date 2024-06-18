@@ -23,6 +23,9 @@ db.exerciseReport = require("./exercise_report.js")(sequelize, Sequelize);
 db.diary = require("./diary.js")(sequelize, Sequelize);
 
 
+// ㅎㅎ껐다가 실행시킬떄마다 주석풀어주고 다시 주석처리하기 sync()
+//db.exerciseReport.sync({force: true});
+
 /*
  * 모델 간 연관관계 설정
 */

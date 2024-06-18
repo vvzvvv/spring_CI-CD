@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
+router.use('/exercise', require('./exercise'));
 router.use('/diary',require('./diary'));
 router.use('/test',require('./test'));
 router.use('/prescription',require('./prescription'));
