@@ -10,9 +10,6 @@ module.exports = async (req, res) => {
         console.log(result);
         return result;
 
-        // 처방약 테이블 가져오기
-        //const prescription = await getPrescriptionContent(userID);
-
     }
     catch(err) {
         console.error(err);

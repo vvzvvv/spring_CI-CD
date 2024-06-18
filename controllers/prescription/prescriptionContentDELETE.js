@@ -1,13 +1,12 @@
-const {postPrescriptionContent} = require("../../models/prescriptionQuery");
+const {deletePrescriptionContent} = require("../../models/prescriptionQuery");
 
 module.exports = async (req, res) => {
     try {
         const userID = 1;
+        const { prescriptionID } = req.params;
 
-        const {name, date, amount} = req.body;
+        const data = await deletePrescriptionContent(userID, prescriptionID);
         
-        const data = await postPrescriptionContent(name, date, amount, userID);
-
         if(data.error){
             console.log(data.error);
             return res.status(201).json({
@@ -22,7 +21,6 @@ module.exports = async (req, res) => {
     }
     catch(err) {
         console.error(err);
-
         return res.status(500).json({
             status: false,
             message: "Internal Server Error"

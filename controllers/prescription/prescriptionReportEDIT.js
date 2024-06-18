@@ -1,13 +1,14 @@
-const {postPrescriptionContent} = require("../../models/prescriptionQuery");
+const {editPrescriptionReport} = require("../../models/prescriptionQuery");
 
 module.exports = async (req, res) => {
     try {
         const userID = 1;
-
-        const {name, date, amount} = req.body;
         
-        const data = await postPrescriptionContent(name, date, amount, userID);
+        const { reportID } = req.params;
+        const {date, time } = req.body;
 
+        const data = await editPrescriptionReport(date, time, userID, reportID);
+        
         if(data.error){
             console.log(data.error);
             return res.status(201).json({
