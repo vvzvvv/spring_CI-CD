@@ -26,11 +26,10 @@ const findPassword = async function (req, res) {
         
         await smtpTransport.sendMail(emailOptions);
         res.status(200).send({
-            message: "비밀번호 초기화 링크 전송 성공",
+            message: "입력하신 이메일로 비밀번호 초기화 링크를 전송하였습니다.",
         });
     } catch (error) {
-        console.error('링크 전송 실패', error);
-        res.status(500).send('링크 전송 실패');
+        res.status(500).send({message: "링크 전송 실패이 실패하였습니다.\n나중에 다시 시도해주세요."});
     } finally {
         smtpTransport.close();
     }

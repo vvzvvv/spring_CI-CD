@@ -16,7 +16,7 @@ const emailCheck = async (req, res) => {
         }
         
         res.status(200).send({
-            message: "등록 가능한 이메일입니다."
+            message: "회원가입 가능한 이메일입니다."
         });
     } catch (err) {
         res.status(500).send({

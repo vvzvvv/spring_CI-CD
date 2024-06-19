@@ -43,16 +43,15 @@ const changePassword = async function (req, res) {
 
 
         if (!user) {
-            return res.status(404).send('존재하지 않는 사용자');
+            return res.status(404).send({message: "존재하지 않는 사용자입니다."});
         }
 
         res.status(200).send({
-            message: "비밀번호 변경 완료",
+            message: "비밀번호 변경이 완료되었습니다.",
             token: token
         });
     } catch (error) {
-        console.error('비밀번호 변경 실패', error);
-        res.status(500).send('비밀번호 변경 실패');
+        res.status(500).send({ message: "비밀번호 변경이 실패하였습니다.\n나중에 다시 시도해주세요."});
     }
 };
 
