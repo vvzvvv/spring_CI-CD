@@ -44,7 +44,7 @@
 }
 
 .photo-button {
-    background-color: #bbd6df;
+    background-color: #1f0075;
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -125,8 +125,8 @@
 }
 
 .save-button {
-    background-color: #bcd6c4;
-    color: #687e70;
+    background-color: #1f0075;
+    color: #ffffff;
     width: 12rem;
     height: 5rem;
 }

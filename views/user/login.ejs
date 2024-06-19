@@ -17,7 +17,7 @@
                 <div class = "text">
                     <b>아이디</b>
                 </div>
-                <input type = "text" name="email" value="">
+                <input type = "text" name="email" required>
             </div>
             <br><br>
 
@@ -25,7 +25,7 @@
                 <div class = "text">
                     <b>비밀번호</b>
                 </div>
-                <input type = "password" name = "password" value="">
+                <input type = "password" name = "password" required>
             </div>
             <br><br><br><br><br>
 
@@ -64,18 +64,18 @@
                 });
                
 
-                if (response.ok) {
+                if (response.status == 200) {
                     const data = await response.json();
                     localStorage.setItem('token', data.token);  // 서버에서 받은 token이 브라우저에 저장됨
-                    alert('로그인 성공!');
+                    alert(`${data.message}`);
                     window.location.href = '/';     // 홈으로 이동
                 }
-                else if (response.status == 404) {   // 존재하지 않는 사용자인 경우
+                else if (response.status === 404) {   // 존재하지 않는 사용자인 경우
                     const error = await response.json();
                     alert(`${error.message}`);
                     window.location.href = '/user/join';
                 }
-                else if (response.status == 401) {     // 비밀번호가 일치하지 않는 경우
+                else if (response.status === 401) {     // 비밀번호가 일치하지 않는 경우
                     const error = await response.json();
                     alert(`${error.message}`);
                     window.location.href = '/user/login';
@@ -87,7 +87,7 @@
                 }
             } catch (err) {
                 console.error('Error:', err);
-                alert('나중에 다시 시도해주세요.');
+                alert(`${error.message}`);
             }
         });
     </script>

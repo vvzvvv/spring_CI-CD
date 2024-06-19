@@ -4,17 +4,16 @@
     background-repeat:no-repeat;
     background-size:cover;
 }
-
 .user {
     background-color: #ffffff00;
     margin: 20% auto;
     padding: 20px;
     width: 60rem;
 }
-
 /*Spring 로고*/
 .user .logo {
     display: block;
+    margin: 50px auto;
     margin: 0 auto;
     width: 100%;
 }
@@ -24,87 +23,63 @@
     width: 50rem;
     margin: 0 auto;
 }
-
 /*아이디, 비밀번호 글자크기*/
 .user .text {
     text-align: left;
     font-size: 2.5rem;
 }
-
-
-
-
 /* 비밀번호 찾기 | 회원가입 글자 */
 .user-link {
     font-size: 2rem;
     text-decoration: none;
 }
-
 .user input {
     background-color: #F5F5F5;
-
     box-shadow: 0.5rem 0.5rem 5px rgb(114, 114, 114);
-
     font-size: 2.5rem;
      
     width: 100%;
     margin-top: 2rem;
     border: none;
     border-radius: 1rem;
-
     padding: 1rem 0rem;
 }
-
 .user .email-form-inline {
     display: inline-block;
     width: 36rem;
     margin-right: 1rem;
 }
-
 .user .button-form-inline {
     display: inline-block;
     width: 12rem;
 }
-
-
 .user input[type=submit] {
     background-color: #F5F5F5;
     
     box-shadow: 0.5rem 0.5rem 5px rgb(114, 114, 114);
-
     text-decoration-color: #5B8243;
     font-size: 2.5rem;
-
     width: 100%;
     
     padding: 1rem 0rem;
-
     border: none;
     border-radius:1rem;
 }
-
-
-
-
-
 /* 비밀번호 찾기 | 회원가입 */
 .member-footer {
     text-align: center;
     margin-top: 20px;
 }
-
 .member-footer div a:hover{
     text-decoration: none;
     border-bottom: none;
 }
-
 .member-footer div a:after{
     content: '|';
     font-size: 2rem;
     margin-right: 5px;
     margin-left: 7px;
 }
-
 .member-footer div a:last-child:after {
     display: none;
 }
