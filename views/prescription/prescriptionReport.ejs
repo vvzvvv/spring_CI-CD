@@ -43,7 +43,7 @@
     <!-- 기록 추가 팝업창 -->
     <div id="popupReport" class="popup-record">
         <div class="record-form" id="report-list">
-            <h3>복용 기록 추가</h3>
+            <h1>복용 기록 추가</h1>
             <form id="add-prescription-report-form">
                 <select id="report-select">
                     <option>처방약 선택</option>
@@ -53,7 +53,7 @@
                 </select>
                 <input type="date" id="report-date" placeholder="복용 날짜">
                 <input type="time" id="report-time" placeholder="복용 시간">
-                <button type="submit">추가</button>
+                <button type="submit" class="add-button">추가</button>
                 <span class="close-btn-record" onclick="closePopupReport()">닫기</span>
             </form>
         </div>            
@@ -63,9 +63,9 @@
     <!-- 기록 수정 팝업창 -->
     <div id="popupReportEdit" class="popup-edit">
         <div class="edit-form" id="edit-list">
-            <h3>수정</h3>
+            <h1>복용 기록 수정</h1>
             <form id="edit-prescription-report-form">
-                <input type="text" id="edit-prescription-name" readonly>
+                <input type="text" id="edit-prescription-name" disabled>
                 <input type="date" id="edit-report-date" placeholder="복용 날짜">
                 <input type="time" id="edit-report-time" placeholder="복용 시간">
                 <button type="submit" class="add-button-edit">수정</button>
@@ -102,10 +102,12 @@
         const time = document.getElementById('report-time').value;
         const prescriptionID = document.getElementById('report-select').value;
         
+        const token = localStorage.getItem('token');
         fetch('/prescription/report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ date, time, prescriptionID }),
         })
@@ -113,6 +115,7 @@
         .then(data => {
             if (data.status) {
                 alert('복용 기록이 성공적으로 추가되었습니다.');
+                window.reload();
                 closePopupReport();
             } else {
                 alert('복용 기록 추가에 실패했습니다.');
@@ -120,7 +123,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('복용 기록 추가 중 오류가 발생했습니다.');
+        
         });
 
         return true; // 폼 제출
@@ -129,7 +132,7 @@
     // 복용 기록 수정
     function openPopupReportEdit(name, date, time, reportID, amount) {
         var popup = document.getElementById("popupReportEdit");
-        document.getElementById("edit-prescription-name").value = name + ' ' + amount;
+        document.getElementById("edit-prescription-name").value = name;
         document.getElementById("edit-report-date").value = date;
         document.getElementById("edit-report-time").value = time;
         document.getElementById("reportID").value = reportID;
@@ -164,6 +167,7 @@
         .then(data => {
             if (data.status) {
                 alert('복용 기록이 성공적으로 수정되었습니다.');
+                window.reload();
                 closePopupReportEdit();
             } else {
                 alert('복용 기록 수정에 실패했습니다.');
@@ -171,7 +175,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('복용 기록 수정 중 오류가 발생했습니다.');
+            
         });
 
         return true; // 폼 제출
@@ -196,6 +200,7 @@
         .then(data => {
             if (data.status) {
                 alert('복용 기록이 성공적으로 삭제되었습니다.');
+                window.reload();
                 closePopupReportEdit();
             } else {
                 alert('복용 기록 삭제에 실패했습니다.');
@@ -203,7 +208,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('복용 기록 삭제 중 오류가 발생했습니다.');
+            
         });
 
         return true; // 폼 제출

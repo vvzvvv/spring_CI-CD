@@ -2,11 +2,10 @@ const { editPrescriptionContent } = require("../../models/prescriptionQuery");
 
 module.exports = async (req, res) => {
     try {
-        const userID = 1;
         const { prescriptionID } = req.params;
         const {name, date, amount} = req.body;
         
-        const data = await editPrescriptionContent(name, date, amount, userID, prescriptionID);
+        const data = await editPrescriptionContent(name, date, amount, prescriptionID);
         
         if(data.error){
             console.log(data.error);

@@ -6,16 +6,22 @@
 <%-include('../menu.ejs') %>
 
 <div class="test-page">
-    <%-include('./testList.ejs', {testList: testList}) %>
+    <%-include('./testList.ejs') %>
     <%-include('./testContent.ejs') %>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
         const token = localStorage.getItem('token');
-
+        
         if (token) {
-            console.log('Token exists in localSotrage: ', token);
+            const response = await fetch('/test', {
+                method: 'GET', // or 'GET'
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
         }
         else {
             console.log('Token does not exist in localStorage');

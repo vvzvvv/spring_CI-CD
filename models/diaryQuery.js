@@ -3,13 +3,22 @@ const db = require('./index');
 
 async function saveDiaryEntry(userID, date, weather, contents, photoUrl) {
     try {
-        const [entry, created] = await db.diary.upsert({
-            diary_date: date,
-            weather: weather,
-            contents: contents,
-            photo: photoUrl,
-            user_id: userID
+        const [entry, created] = await db.diary.findOrCreate({
+            where: { user_id: userID, diary_date: date },
+            defaults: {
+                weather: weather,
+                contents: contents,
+                photo: photoUrl
+            }
         });
+
+        if (!created) {
+            entry.weather = weather;
+            entry.contents = contents;
+            entry.photo = photoUrl;
+            await entry.save();
+        }
+
         console.log('일기 저장 완료:', entry);
         return entry;
     } catch (error) {

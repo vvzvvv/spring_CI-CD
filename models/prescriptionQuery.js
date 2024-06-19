@@ -32,7 +32,7 @@ const postPrescriptionContent = async(name, date, amount, userID) => {
 }
 
 // 처방약 수정
-const editPrescriptionContent = async(name, date, amount, userID, prescriptionID) => {
+const editPrescriptionContent = async(name, date, amount, prescriptionID) => {
     try {
         const prescription = await db.prescription.update(
             {
@@ -41,7 +41,6 @@ const editPrescriptionContent = async(name, date, amount, userID, prescriptionID
                 prescription_amount: amount
             },
             { where : {
-                    user_id: userID,
                     prescription_id: prescriptionID
                 }
             }
@@ -55,11 +54,10 @@ const editPrescriptionContent = async(name, date, amount, userID, prescriptionID
     }
 };
 
-const deletePrescriptionContent = async(userID, prescriptionID) => {
+const deletePrescriptionContent = async(prescriptionID) => {
     try {
         const prescription = await db.prescription.destroy({
                 where : {
-                    user_id: userID,
                     prescription_id: prescriptionID
                 }
         });
@@ -81,7 +79,10 @@ const getPrescriptionReport = async(userID) => {
                 attributes: ['prescription_name', 'prescription_amount'],
                 required: true
             }
-        ]
+        ],
+        where : {
+            user_id: userID,
+        }
     })
     return data;
 }
@@ -105,7 +106,7 @@ const postPrescriptionReport = async(date, time, userID, prescriptionID) => {
 };
 
 // 복용 기록 수정
-const editPrescriptionReport = async(date, time, userID, reportID) => {
+const editPrescriptionReport = async(date, time, reportID) => {
     try {
         const prescriptionReport = await db.prescriptionReport.update(
             {
@@ -113,7 +114,6 @@ const editPrescriptionReport = async(date, time, userID, reportID) => {
                 prescription_report_time: time
             },
             { where : {
-                    user_id: userID,
                     prescription_report_id: reportID
                 }
             }
@@ -128,11 +128,10 @@ const editPrescriptionReport = async(date, time, userID, reportID) => {
 };
 
 // 복용약 기록 삭제
-const deletePrescriptionReport = async(userID, reportID) => {
+const deletePrescriptionReport = async(reportID) => {
     try {
         const prescriptionReport = await db.prescriptionReport.destroy({
                 where : {
-                    user_id: userID,
                     prescription_report_id: reportID
                 }
         });
@@ -157,7 +156,10 @@ const getChart = async(userID) => {
             order: [
                 ['prescription_name', 'ASC'],
                 ['prescription_date', 'ASC']
-            ]
+            ],
+            where : {
+                user_id: userID,
+            }
         });
 
         const groupedData = data.reduce((acc, prescription) => {

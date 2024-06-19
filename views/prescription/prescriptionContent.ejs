@@ -31,11 +31,11 @@
 
     <div id="popup" class="popup-prescription">
         <div class="prescription-form" id="prescription-list">
-            <h3>처방약 추가</h3>
+            <h1>처방약 추가</h1>
             <form id="add-prescription-form">
                 <input type="text" id="prescription-name" placeholder="처방약 이름" required>
                 <input type="date" id="prescription-date" placeholder="처방 날짜" required>
-                <input type="text" id="prescription-amount" placeholder="처방 용량" required>mg
+                <input type="text" id="prescription-amount" placeholder="처방 용량 mg" required>
                 <button type="submit" class="add-button">추가</button>
                 <span class="close-btn" onclick="closePopup()">닫기</span>
             </form>
@@ -45,7 +45,7 @@
     <!-- 처방약 수정 팝업창 -->
     <div id="popupEdit" class="popup-edit">
         <div class="edit-form" id="edit-list">
-            <h3>수정</h3>
+            <h1>처방약 수정</h1>
             <form id="edit-prescription-form">
                 <input type="text" id="edit-name">
                 <input type="date" id="edit-date" placeholder="처방 날짜">
@@ -85,10 +85,12 @@
         const date = document.getElementById('prescription-date').value;
         const amount = document.getElementById('prescription-amount').value;
 
+        const token = localStorage.getItem('token');
         fetch('/prescription/content', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ name, date, amount }),
         })
@@ -96,6 +98,7 @@
         .then(data => {
             if (data.status) {
                 alert('처방약이 성공적으로 추가되었습니다.');
+                window.reload();
                 closePopup();
             } else {
                 alert('처방약 추가에 실패했습니다.');
@@ -103,7 +106,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('처방약 추가 중 오류가 발생했습니다.');
+        
         });
         return true; // 폼 제출 (새로고침)
     }
@@ -147,6 +150,7 @@
         .then(data => {
             if (data.status) {
                 alert('처방약 정보가 성공적으로 수정되었습니다.');
+                window.reload();
                 closePopupEdit();
             } else {
                 alert('처방약 수정에 실패했습니다.');
@@ -154,7 +158,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('처방약 수정 중 오류가 발생했습니다.');
+        
         });
 
         return true; // 폼 제출
@@ -179,6 +183,7 @@
         .then(data => {
             if (data.status) {
                 alert('처방약이 성공적으로 삭제되었습니다.');
+                window.reload();
                 closePopupEdit();
             } else {
                 alert('처방약 삭제에 실패했습니다.');
@@ -186,7 +191,7 @@
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('처방약 삭제 중 오류가 발생했습니다.');
+        
         });
 
         return true; // 폼 제출

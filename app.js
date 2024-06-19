@@ -11,7 +11,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
 app.use(express.json());    // req.body를 파싱하기 위해서 사용함
 
 app.use(express.urlencoded({ extended: false }));
