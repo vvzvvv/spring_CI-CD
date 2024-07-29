@@ -62,12 +62,33 @@
 
 .login a {
     text-decoration: none;
+    font-style: Bold;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 2.8rem;
+
+    color: #180565;
+    font-family: 'cafe24';
 }
 
 .join a {
     text-decoration: none;
+    font-style: Bold;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 2.8rem;
+
+    color: #180565;
+    font-family: 'cafe24';
 }
 
 .logout a {
     text-decoration: none;
+    font-style: Bold;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 2.8rem;
+
+    color: #180565;
+    font-family: 'cafe24';
 }

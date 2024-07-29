@@ -1,12 +1,7 @@
 /*사용자 화면 배경화면 지정*/
-.user-background {
-    background-image: url(/images/user_background.png);
-    background-repeat:no-repeat;
-    background-size:cover;
-}
 .user {
     background-color: #ffffff00;
-    margin: 20% auto;
+    margin: 10% auto;
     padding: 20px;
     width: 60rem;
 }
@@ -14,10 +9,9 @@
 .user .logo {
     display: block;
     margin: 50px auto;
-    margin: 0 auto;
-    width: 100%;
+    margin-bottom: 10rem;
+    width: 60%;
 }
-
 
 .user .form {
     width: 50rem;
@@ -65,7 +59,7 @@
     border: none;
     border-radius:1rem;
 }
-/* 비밀번호 찾기 | 회원가입 */
+/* 비밀번호 변경 | 회원가입 */
 .member-footer {
     text-align: center;
     margin-top: 20px;
@@ -80,6 +74,10 @@
     margin-right: 5px;
     margin-left: 7px;
 }
+.member-footer div a:visited {
+    color: inherit;
+}
+
 .member-footer div a:last-child:after {
     display: none;
 }
