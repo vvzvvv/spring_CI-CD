@@ -16,7 +16,7 @@
                 <div class = "text">
                     <b>아이디</b>
                 </div>
-                <input type = "text" name="email" required>
+                <input type = "text" name="email" class = "text_input" required>
             </div>
             <br><br>
 
@@ -26,7 +26,6 @@
                 </div>
                 <input type = "password" name = "password" required>
             </div>
-            <br><br><br><br><br>
 
             <div>
                 <input class="button" type="submit" value="로그인">
@@ -37,8 +36,7 @@
             <div class = "member-footer">
                 <div>
                     <a href="/user/emailVerification" class = "user-link" >비밀번호 변경</a>
-                    <a href="/user/join"
-                    class = "user-link">회원가입</a>
+                    <a href="/user/join/patient" class = "user-link">회원가입</a>
                 </div>
             </div>
         </form>
@@ -72,7 +70,7 @@
                 else if (response.status === 404) {   // 존재하지 않는 사용자인 경우
                     const error = await response.json();
                     alert(`${error.message}`);
-                    window.location.href = '/user/join';
+                    window.location.href = '/user/join/patient';
                 }
                 else if (response.status === 401) {     // 비밀번호가 일치하지 않는 경우
                     const error = await response.json();
