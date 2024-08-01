@@ -19,10 +19,17 @@ router.post('/login', loginPOST);
 
 /*
 회원가입 관련 라우트
+/join/patient : 환자 회원가입 url
+/join/doctor : 의사 회원가입 url
 */
-router.get('/join', function(req, res) {
-  res.render("user/join");
+router.get('/join/patient', function(req, res) {
+  res.render("user/patientJoin");
 });
+
+router.get('/join/doctor', function(req, res) {
+  res.render("user/doctorJoin");
+});
+
 
 router.post('/join', joinPOST);
 router.post('/join/emailChecking', emailCheckingPOST);

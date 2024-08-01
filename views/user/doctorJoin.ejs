@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<link href="/stylesheets/users/user.css" rel="stylesheet">
+<link href="/stylesheets/style.css" rel="stylesheet">
+<%-include('../header.ejs') %>
+
+<body class = "user-background">
+  <div class = "user">
+      <img class = "logo" src="/images/spring_logo.jpg">
+
+    <a href="/user/join/patient" class = "join-non-selected-button left">환자</a>
+    <a href="/user/join/doctor" class = "join-selected-button right">의사</a>
+
+      <form id="join-form" class="form">
+        <div>
+            <div class = "text">
+                <b>성명</b>
+            </div>
+            <input type = "text" name = "name" class = "text_input" required>
+            
+            <div class = "text">
+                <b>의사 면허번호</b>
+            </div>
+            <input type = "text" name = "license_number" class = "text_input" required>
+
+            <div class = "text">
+                <b>3일 이내 발급 받은 면허증명서</b>
+            </div>
+
+            <input type = "file" name = "certification" id = "certification-upload-button" required>
+
+            <div id = "file_explanation">
+                <b>(파일 형식은: jpg, pdf, png만 가능)</b>
+            </div>
+
+            <div class = "text">
+                <b>이메일</b>
+            </div>
+
+          <div class="email-submit-form">
+            <div class="email-form-inline">
+              <input type="text" name="email" class = "text_input" required>
+            </div>
+  
+            <div class="button-form-inline">
+              <input type="button" id="check-email-button" value="중복 확인" class = "button-checking-email">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class = "text">
+            <b>비밀번호</b>
+          </div>
+          <input type = "password" name = "password" class = "text_input" required>
+        </div>
+
+        <div>
+          <div class = "text">
+            <b>비밀번호 확인</b>
+          </div>
+          <input type = "password" name = "passwordCheck" class = "text_input" required>
+        </div>
+
+        <div>
+          <input type="submit" class="submit" value="회원가입" class = "text_input">
+        </div>
+
+      </form>
+  </div>

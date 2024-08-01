@@ -1,51 +1,113 @@
 /*사용자 화면 배경화면 지정*/
 .user {
     background-color: #ffffff00;
-    margin: 10% auto;
+    margin: 7% auto;
     padding: 20px;
     width: 60rem;
 }
+
 /*Spring 로고*/
 .user .logo {
     display: block;
     margin: 50px auto;
-    margin-bottom: 10rem;
-    width: 60%;
+    margin-bottom: 10.8rem;
+    width: 40rem;
 }
+
+
+/*
+회원가입할때 환자인지 의사인지 선택하는 버튼 관련 CSS
+*/
+.user .join-non-selected-button {
+    font-size: 2.5rem;
+    color: #A9A9A9;
+
+    background-color: #E6E8EA;
+
+    text-decoration: none;
+}
+.user .left {
+    display: inline-block;
+
+    text-align: center;
+    vertical-align: middle;
+    line-height: 7rem;
+
+    width: 29rem;
+    height: 7rem;
+    border-radius: 1rem;
+    margin-top: 12.4rem;
+    margin-bottom: 10.1rem;
+}
+
+.user .join-selected-button {
+    font-size: 2.5rem;
+    color: white;
+
+    background-color: #02389C;
+
+    text-decoration: none;
+}
+.user .right {
+    display: inline-block;
+
+    text-align: center;
+    vertical-align: middle;
+    line-height: 7rem;
+
+    width: 30rem;
+    height: 7rem;
+    border-radius: 1rem;
+    margin-top: 12.4rem;
+    margin-bottom: 10.1rem;
+}
+
+
 
 .user .form {
     width: 50rem;
     margin: 0 auto;
 }
-/*아이디, 비밀번호 글자크기*/
+
+/* 아이디, 비밀번호 글자크기 */
 .user .text {
     text-align: left;
     font-size: 2.5rem;
 }
-/* 비밀번호 찾기 | 회원가입 글자 */
+
+/* 비밀번호 변경 | 회원가입 글자 */
 .user-link {
     font-size: 2rem;
     text-decoration: none;
 }
-.user input {
+
+
+
+
+
+.user .text_input {
     background-color: #F5F5F5;
     box-shadow: 0.5rem 0.5rem 5px rgb(114, 114, 114);
     font-size: 2.5rem;
      
     width: 100%;
     margin-top: 2rem;
+    margin-bottom: 3.9rem;
     border: none;
     border-radius: 1rem;
     padding: 1rem 0rem;
 }
-.user .email-form-inline {
-    display: inline-block;
-    width: 36rem;
-    margin-right: 1rem;
-}
-.user .button-form-inline {
-    display: inline-block;
-    width: 12rem;
+.user input[type=password] {
+    background-color: #F5F5F5;
+    box-shadow: 0.5rem 0.5rem 5px rgb(114, 114, 114);
+    font-size: 2.5rem;
+     
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 3.9rem;
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 0rem;
 }
 .user input[type=submit] {
     background-color: #F5F5F5;
@@ -53,12 +115,58 @@
     box-shadow: 0.5rem 0.5rem 5px rgb(114, 114, 114);
     text-decoration-color: #5B8243;
     font-size: 2.5rem;
+    font-weight : bold;
     width: 100%;
     
     padding: 1rem 0rem;
     border: none;
     border-radius:1rem;
 }
+
+
+
+/*
+의사가 회원가입 할때 업로드할때 쓰이는 버튼과 파일 관련 CSS
+*/
+#certification-upload-button {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+#file_explanation {
+    font-size: 2rem;
+    margin-bottom: 4.7rem;
+}
+
+/*
+이메일과 이메일 중복확인 버튼 inline 관련 CSS
+*/
+.user .email-form-inline {
+    display: inline-block;
+    width: 36rem;
+    margin-right: 1rem;
+}
+.user .button-form-inline {
+    font-weight : bold;
+
+    display: inline-block;
+    width: 12rem;
+}
+.user .button-checking-email {
+    font-weight : bold;
+
+    background-color: #F5F5F5;
+    box-shadow: 0.5rem 0.5rem 5px rgb(114, 114, 114);
+    font-size: 2.5rem;
+     
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 3.9rem;
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 0rem;
+}
+
+
 /* 비밀번호 변경 | 회원가입 */
 .member-footer {
     text-align: center;
@@ -74,10 +182,10 @@
     margin-right: 5px;
     margin-left: 7px;
 }
-.member-footer div a:visited {
-    color: inherit;
-}
-
 .member-footer div a:last-child:after {
     display: none;
+}
+
+a:visited {
+    color: inherit;
 }
