@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../header.ejs') %>
+    <%- include('../menu.ejs') %>
+    <link href="/stylesheets/mypage.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="mypage-view">
+        <div class="mypage-title">
+            <div class="title">회원 정보 수정</div>
+        </div>
+        <div class="mypage-block">
+            <div class="password-block" onclick="location.href='/user/emailverification'">
+                <a class="password-title">비밀번호 수정</a>
+                <img class="togo-click-img" src="/images/right.png"/>
+            </div>
+            <hr class="hr1">
+            <div class="connectDoc-block">
+                <a class="connectDoc-title">담당 의사 연결</a>
+                <table class="table-block">
+                    <thead>
+                        <tr class="list-head" scope="col">
+                            <th class="name">이름</th>
+                            <th class="number">면허 번호</th>
+                            <th class="agreement">정보 제공 동의 허용 여부</th>
+                        </tr>
+                    </thead>
+            
+                    <tbody id="list-content-block">
+                        <tr class="list-content">
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr class="hr1">
+            <div class="rangeSetting-block">
+                <a class="rangeSetting-title">정보 공개 범위 설정</a>
+                <table class="range-table-block">
+                    <thead>
+                        <tr class="range-list-head" scope="col">
+                            <th class="info">정보</th>
+                            <th class="accept">공개 동의 여부</th>
+                        </tr>
+                    </thead>
+            
+                    <tbody id="range-content-block">
+                        <tr class="medicine-tr">
+                            <td class="info">복용약 변화량</td>
+                            <td class="accept">
+                                <input type="checkbox" class="medicine-check">
+                            </td>
+                        </tr>
+                        <tr class="sleep-tr">
+                            <td class="info">수면 내역</td>
+                            <td class="accept">
+                                <input type="checkbox" class="sleep-check">
+                            </td>
+                        </tr>
+                        <tr class="exercise-tr">
+                            <td class="info">운동 내역</td>
+                            <td class="accept">
+                                <input type="checkbox" class="exercise-check">
+                            </td>
+                        </tr>
+                        <tr class="test-tr">
+                            <td class="info">테스트 점수</td>
+                            <td class="accept">
+                                <input type="checkbox" class="test-check">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="submit-block">
+                    <button class="save-range">저장하기</button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</body> 
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            getDoctorInfo(token);
+            getAgreementInfo(token);
+        }
+        else {
+            console.log('Token does not exist in localStorage');
+            window.location.href = '/user/login';
+        }
+    })
+
+    function getDoctorInfo(){
+
+    }
+
+    function getAgreementInfo(){
+
+    }
+
+    function passwordChange(){
+
+    }
+
+</script>
