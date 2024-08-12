@@ -12,6 +12,7 @@ router.use('/diary',require('./diary'));
 router.use('/test',require('./test'));
 router.use('/prescription',require('./prescription'));
 router.use('/sleep',require('./sleep'));
+router.use('/mypage', require('./mypage'));
 
 module.exports = router;
 
