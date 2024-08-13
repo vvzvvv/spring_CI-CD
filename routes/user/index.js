@@ -2,10 +2,33 @@ const express = require("express");
 const router = express.Router();
 
 const loginPOST = require("../../controllers/user/loginPOST");
-const joinPOST = require("../../controllers/user/joinPOST");
+
+const joinPatientPOST = require("../../controllers/user/joinPatientPOST");
+const joinDoctorPOST = require("../../controllers/user/joinDoctorPOST");
+
 const emailCheckingPOST = require("../../controllers/user/emailCheckingPOST");
 const passwordResetLinkPOST = require("../../controllers/user/passwordResetLinkPOST");
 const passwordPUT = require("../../controllers/user/passwordPUT");
+
+const multer = require('multer');
+const path = require('path');
+
+
+/*
+multer관련 로직
+*/
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../../uploads'));
+  },
+  filename: function(req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
 
 /*
 로그인 관련 라우트
@@ -31,7 +54,9 @@ router.get('/join/doctor', function(req, res) {
 });
 
 
-router.post('/join', joinPOST);
+router.post('/join/patient', joinPatientPOST);
+router.post('/join/doctor', upload.single('certification'), joinDoctorPOST);
+
 router.post('/join/emailChecking', emailCheckingPOST);
 
 
@@ -58,6 +83,9 @@ router.get('/password/change', function(req, res) {
 });
 
 router.put('/password/change', passwordPUT);
+
+
+
 
 
 module.exports = router;
