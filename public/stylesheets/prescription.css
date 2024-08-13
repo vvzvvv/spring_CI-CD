@@ -8,7 +8,7 @@
     width: 40rem;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 2rem;
+    border-radius: 1rem;
     padding: 2rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     transition: visibility 0.3s, opacity 0.3s;
@@ -28,7 +28,7 @@
     width: 60%;
     padding: 5px;
     margin-bottom: 5px;
-    border: 1.5px solid #0c5401;
+    border: 1.5px solid black;
     border-radius: 1rem;
 }
 .record-form select {
@@ -36,7 +36,7 @@
     width: 63.5%;
     padding: 5px;
     margin-bottom: 5px;
-    border: 1.5px solid #0c5401;
+    border: 1.5px solid black;
     border-radius: 1rem;
 }
 
@@ -44,9 +44,9 @@
     margin-top: 10px;
     align-self: flex-end;
     padding: 0.5rem 1rem;
-    background-color: #DBE6D9;
+    background-color: #DBEBEF;
     border-radius: 1rem;
-    border: 1.5px solid #0c5401;
+    border: 1.5px solid black;
 }
 
 .prescription-form form, .record-form form, .edit-form form {
@@ -84,9 +84,9 @@ p {
 }
 
 .chart-box {
-    background-color: #FAFAFA;
+    background-color: #ffffff;
     border: 0.2rem solid #E3E2E2;
-    border-radius: 1rem;
+    border-radius: 2rem;
     width: 122rem;
     height : 30rem;
     padding : 10rem;
@@ -133,7 +133,7 @@ p {
 .section-prescription, .section-record {
     background-color: #FAFAFA;
     width: 68.3rem;
-    border-radius: 1rem;
+    border-radius: 2rem;
     border: 0.2rem solid #E3E2E2;
 }
 
@@ -150,9 +150,9 @@ p {
     height: 3.2rem;
     margin-top: 1.5rem;
     margin-left: 0.8rem;
-    background-color: #DBE6D9;
+    background-color: #DBEBEF;
     border-radius: 1rem;
-    border: 0.2rem solid #0c5401;
+    border: 0.2rem solid black;
 }
 
 .record-list h1, .prescription-list h1  { /* 약 이름 */
