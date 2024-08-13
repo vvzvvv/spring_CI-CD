@@ -64,6 +64,7 @@
 .table-block{ 
     border-collapse: collapse; 
     width: 100%;
+    table-layout: fixed;
 }
 
 th{
@@ -72,9 +73,79 @@ th{
     font-size: 2.5rem;
     height: 8.2rem;
     color: #393939;
-    border-top: 1px solid #000000;
-    border-bottom: 1px solid #000000;
+    border-top: 0.1rem solid #000000;
+    border-bottom: 0.1rem solid #000000;
     vertical-align: middle; 
+}
+
+.management-td{
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.2rem;
+    height: 8.2rem;
+    color: #393939;
+    border-top: 0.1rem solid #B8ACAC;
+    border-bottom: 0.1rem solid #B8ACAC;
+    vertical-align: middle;
+}
+
+.button-td{
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #393939;
+    justify-content: center;
+    display: flex;
+    gap: 5rem;
+    height: 8.2rem;
+    align-items: center;
+    width: 100%;
+    border-bottom: 0.1rem solid #B8ACAC;
+}
+
+.accept-button{
+    width: 15.6rem;
+    height: 4.1rem;
+    border: 0;
+    border-radius: 1rem;
+    color: #FFFFFF;
+    font-family: 'Pretendard-Medium';
+    font-size: 2.4rem;
+    background-color: #484882;
+    box-shadow: 0.4rem 0.4rem 0.4rem rgba(119, 138, 152, 0.5);
+}
+
+.refuse-button{
+    width: 15.6rem;
+    height: 4.1rem;
+    border: 0;
+    border-radius: 1rem;
+    color: #282626;
+    font-family: 'Pretendard-Medium';
+    font-size: 2.4rem;
+    background-color: #A6A6BE;
+    box-shadow: 0.4rem 0.4rem 0.4rem #A6A6BE;
+}
+
+.done-button{
+    width: 15.6rem;
+    height: 4.1rem;
+    border: 0;
+    color: #393939;
+    font-family: 'Pretendard-Medium';
+    font-size: 2.2rem;
+    background-color: #FFFFFF;
+}
+
+.disconnect-button{
+    width: 15.6rem;
+    height: 4.1rem;
+    border: 0;
+    border-radius: 1rem;
+    color: #282626;
+    font-family: 'Pretendard-Medium';
+    font-size: 2.4rem;
+    background-color: #A6A6BE;
+    box-shadow: 0.4rem 0.4rem 0.4rem #A6A6BE;
 }
 
 .rangeSetting-block{
@@ -156,4 +227,8 @@ th{
 .submit-block{
     display: flex;
     justify-content: end;
+}
+
+.rangeSetting-title:hover, .password-title:hover, .connectDoc-title:hover{
+    border-bottom: 0rem;
 }
