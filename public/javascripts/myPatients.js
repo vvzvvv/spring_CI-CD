@@ -1,27 +1,26 @@
 // 환자 검색 기능
 function searchPatients() {
-    const searchInput = document.getElementById('patient-search').value;
-    fetch('/doctor_main/searchMyPatients', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ doctorId: 1, searchInput }) // doctorId는 예시로 넣은 것입니다.
-    })
-    .then(response => response.json())
-    .then(data => {
-        const patientTable = document.getElementById('patientSearchResults');
-        patientTable.innerHTML = ''; // 기존 내용을 초기화
+    const searchInput = document.getElementById('patient-search').value.toLowerCase();
+    const patientTable = document.getElementById('patientSearchResults');
+    const rows = patientTable.getElementsByTagName('tr');
 
-        data.forEach(patient => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${patient.email}</td>
-                <td>${patient.name}</td>
-                <td><button type="button" class="doctor_main-button" onclick="viewPatient('${patient.userId}')">열람</button></td>
-            `;
-            patientTable.appendChild(row);
-        });
-    });
+    for (let i = 0; i < rows.length; i++) {
+        const emailCell = rows[i].getElementsByTagName('td')[0];
+        const nameCell = rows[i].getElementsByTagName('td')[1];
+
+        if (emailCell || nameCell) {
+            const emailText = emailCell.textContent.toLowerCase();
+            const nameText = nameCell.textContent.toLowerCase();
+
+            if (emailText.includes(searchInput) || nameText.includes(searchInput)) {
+                rows[i].style.display = ''; // 검색어와 일치하는 행을 표시
+            } else {
+                rows[i].style.display = 'none'; // 검색어와 일치하지 않는 행을 숨김
+            }
+        }
+    }
 }
+
 
 // 요청 취소 기능
 function cancelRequest(doctorId, userId) {
@@ -46,3 +45,32 @@ function cancelRequest(doctorId, userId) {
 function viewPatient(userId) {
     window.location.href = `/doctor_main/board/${userId}`;
 }
+
+
+// 요청 보낸 목록 불러오기
+function loadRequestList(doctorId) {
+    fetch(`/doctor_main/getRequestList/${doctorId}`)
+        .then(response => response.json())
+        .then(data => {
+            const requestTable = document.getElementById('requestListResults');
+            requestTable.innerHTML = ''; // 기존 내용 초기화
+
+            data.forEach(request => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-user-id', request.userId);
+                row.innerHTML = `
+                    <td>${request.email}</td>
+                    <td>${request.name}</td>
+                    <td><button type="button" class="doctor_main-button" onclick="cancelRequest(${doctorId}, '${request.userId}')">취소</button></td>
+                `;
+                requestTable.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching request list:', error));
+}
+
+// 페이지 로드 시 요청 보낸 목록을 불러와용
+document.addEventListener('DOMContentLoaded', function() {
+    const doctorId = 1; // 일단 1
+    loadRequestList(doctorId);
+});
