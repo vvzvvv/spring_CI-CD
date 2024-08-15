@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring!</title>
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/doctor_addPatient.css" rel="stylesheet">
+</head>
+<body>
+    <button onclick="openPopup()">환자 추가</button>
+
+    <div id="popup" class="popup">
+
+
+        <div class="patient-add" id="prescription-list">
+            <div class="exit-button">
+                <span onclick="closePopup()">닫기</span>
+            </div>
+            
+            <div class="add-title">
+                <div>
+                    <h1>환자 추가</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="환자 아이디 검색">
+                    <button class="search-button" onclick="searchPatient()">검색</button>
+                </div>
+            </div>
+
+            <!-- 검색 결과 표시 테이블 -->
+            <table id="patientTable">
+                <thead>
+                    <tr scope="col">
+                        <th>환자 아이디</th>
+                        <th>환자 이름</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <!-- 검색 결과가 여기에 추가됨 -->
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</body>
+
+<script>
+    function openPopup() {
+		var popup = document.getElementById("popup");
+		popup.style.visibility = "visible";
+		popup.style.opacity = "1";
+	}
+
+	function closePopup() {
+		var popup = document.getElementById("popup");
+		popup.style.visibility = "hidden";
+		popup.style.opacity = "0";
+	}
+
+    function searchPatient() {
+        const searchInput = document.getElementById('searchInput').value;
+
+        fetch(`doctor/searchPatient/${searchInput}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ searchInput }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('patientTable').querySelector('tbody');
+            tbody.innerHTML = '';
+
+            data.forEach(patient => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${patient.email}</td>
+                    <td>${patient.name}</td>
+                    <td>
+                        <button class="${patient.buttonType === '승인 대기중' ? 'waiting-button' :
+                                        patient.buttonType === '추가완료' ? 'completed-button' :
+                                        'add-button'}"
+                                onclick="${patient.buttonType === '추가하기' ? `addPatient('${patient.userId}', this)` : ''}" 
+                                ${patient.buttonType !== '추가하기' ? 'disabled' : ''}>
+                            ${patient.buttonType}
+                        </button>
+                    </td>`;
+                tbody.appendChild(row);
+            });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    function addPatient(patientId, button) {
+        fetch(`/doctor/addPatient`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: patientId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                button.classList.remove('add-button');
+                button.classList.add('waiting-button');
+                button.textContent = '승인 대기중';
+                button.disabled = true;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+</script>

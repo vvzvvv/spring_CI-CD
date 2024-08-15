@@ -1,0 +1,110 @@
+/*div 배치 정리하기*/
+.doctor_main-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.doctor_main-container{
+    display: flex;
+    width: 100%;
+    padding: 20px;
+}
+
+.patitentListSearchButton-container{
+    margin-bottom: 20px;
+}
+
+.doctor_main-leftContainer1, .doctor_main-rightContainer1 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.doctor_main-leftContainer1 {
+    border-right: 0.3px solid #000000;
+}
+
+
+.doctor_main-leftContainer2, .doctor_main-rightContainer2{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    flex-grow: 1;
+}
+
+/*나의 환자 목록, 요청 보낸 목록 텍스트*/
+.patientListText-container{
+    color: #484882;
+}
+
+.requestListText-container{
+    color: #484882;
+}
+
+/*테이블*/
+/*왼쪽 테이블*/
+.patientSearchList-table{
+    border-collapse: collapse;
+    border-spacing: 10px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.patientSearchList-table td, .patientSearchList-table th {
+    padding: 10px; 
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+.patientSearchList-table tbody tr {
+    border-bottom: 1px solid #B8ACAC;
+    border-top: 1px solid #000000;
+}
+
+/*오른쪽 테이블*/
+.requestList-table{
+    border-collapse: collapse;
+    border-spacing: 10px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.requestList-table td, .requestList-table th {
+    padding: 10px;
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+.requestList-table tbody tr {
+    border-bottom: 1px solid #B8ACAC;
+    border-top: 1px solid #000000;
+}
+
+/*색상 변경*/
+
+.doctor_main-button{
+    color: white;
+    background: #484882;
+    border-radius: 5px;
+    width: 85px;
+    height: 25px;
+
+}
+
+.doctor_main-button:active{
+    color:white;
+    background: #8E8EB2;
+}
+
+.doctor_main-tab{
+    color: #7B7B7B;
+    width: 85px;
+    height: 25px;   
+}

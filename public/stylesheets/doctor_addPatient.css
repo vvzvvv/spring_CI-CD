@@ -1,0 +1,128 @@
+.popup {
+    visibility: hidden;
+    opacity: 0;
+    /* visibility: visible;
+    opacity: 1; */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1085px;
+    height: 677px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    transition: visibility 0.3s, opacity 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.patient-add {
+    width: 828px;
+    height: 561px;
+}
+
+.add-title {
+    display: flex;
+    gap: 400px;
+
+}
+
+.add-title h1{
+    color: #484882;
+    font-size: 32px;
+}
+
+.search-bar {
+    margin-top: 25px; 
+}
+
+.add-title input {
+    background-color: #F5F5F5;
+    width: 160px;
+    height: 30px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.search-button {
+    background-color: #484882;
+    color: white;
+    width: 105px;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.add-button {
+    background-color: #484882;
+    color: white;
+    width: 105px;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 19px;
+    border: none;
+}
+
+table {
+    width: 800px;
+    font-size: 25px;
+    margin: 15px;
+
+}
+
+th{
+    text-align: center;
+    font-style: ExtraBold;
+    color: black;
+    border-top: 1.5px solid #000000;
+    border-bottom: 1.5px solid #000000;
+}
+
+tr{
+    text-align: center;
+    height: 6.2rem;
+    color: #7B7B7B;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #B8ACAC;
+}
+
+
+td {
+    gap: 30px;
+    text-align: center;
+    padding: 15px;
+    color: #7B7B7B;
+    font-size: 22px;
+    border-bottom: 1px solid #b8acac;
+}
+
+
+
+.waiting-button {
+    background-color: #8E8EB2;
+    color: white;
+    width: 105px;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 19px;
+    border: none;
+}
+
+.completed-button {
+    background-color: #BDBDC0;
+    color: white;
+    width: 105px;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 19px;
+    border: none;
+}
+
+.exit-button {
+    float: right;
+    color: #7B7B7B;
+}

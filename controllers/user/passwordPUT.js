@@ -25,26 +25,37 @@ const changePassword = async function (req, res) {
         // 토큰으로부터 이메일 추출
         const decode = jwt.verify(token, secretKey);
         const email = decode.email;
+        const user = decode.user;       // 환자인지 의사인지 구분
+
         console.log(email);
+        console.log(user);
 
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-        const user = await db.user.update(
-            { password: hashedNewPassword }, 
-            {
-                where: { email },
-            },
-        );
+        // 환자 이메일인 경우
+        if (user == "patient") {
+            const patient = await db.user.update(
+                { password: hashedNewPassword }, 
+                {
+                    where: { email },
+                },
+            );
+        }
+        // 의사 이메일인 경우
+        else {
+            const doctor = await db.doctor.update(
+                { password: hashedNewPassword },
+                {
+                    where: { email },
+                },
+            );
+        }
+        
 
         // 비밀번호 변경 후 토큰 데이터베이스에 저장되어 있는 토큰 삭제
-        const passwordToken = await db.passwordToken.findOne({ where: {email: email} });
+        const passwordToken = await db.passwordToken.findOne({ where: { email: email } });
         console.log(passwordToken);
         await passwordToken.destroy();
-
-
-        if (!user) {
-            return res.status(404).send({message: "존재하지 않는 사용자입니다."});
-        }
 
         res.status(200).send({
             message: "비밀번호 변경이 완료되었습니다.",
