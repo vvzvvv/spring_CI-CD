@@ -13,6 +13,7 @@ router.use('/test',require('./test'));
 router.use('/prescription',require('./prescription'));
 router.use('/sleep',require('./sleep'));
 router.use('/mypage', require('./mypage'));
+router.use('/board', require('./board'));
 
 module.exports = router;
 

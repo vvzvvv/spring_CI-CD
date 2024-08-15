@@ -1,0 +1,41 @@
+.board-block{
+    margin-top: 10rem;
+    margin-left: 13.7rem;
+    margin-right: 13.7rem;
+}
+
+.name-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toList{
+    width: 11.8rem;
+    height: 3.8rem;
+    background-color: #484882;
+    color: #FFFFFF;
+    border-radius: 1rem;
+    border: 0;
+    font-size: 2.4rem;
+}
+
+.name-info{
+    font-family: 'Pretendard-Medium';
+    color: #484882;
+    font-size: 3.5rem;
+}
+
+.board-content{
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    padding : 1rem;
+}
+
+.medicine-info-name, .sleep-info-name, .exercise-info-name, .test-info-name{
+    font-size: 2rem;
+    font-family: 'Pretendard-Bold';
+}
+
