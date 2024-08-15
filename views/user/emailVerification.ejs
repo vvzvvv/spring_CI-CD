@@ -54,6 +54,10 @@
             alert(`${data.message}`);
             window.location.href = '/user/login';
           }
+          else if (response.status == 404) {
+            const data = await response.json();
+            alert(`${data.message}`);
+          }
         } catch (error) {
           alert(`${error.message}`);
         }
