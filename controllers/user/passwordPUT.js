@@ -25,6 +25,7 @@ const changePassword = async function (req, res) {
         // 토큰으로부터 이메일 추출
         const decode = jwt.verify(token, secretKey);
         const email = decode.email;
+
         console.log(email);
 
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);

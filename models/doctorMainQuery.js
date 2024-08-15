@@ -10,7 +10,7 @@ const db = require('./index');
 const getMyPatients = async (doctorId, searchInput) => {
     try {
         // 의사가 관리하는 환자 리스트 불러오기
-        const data = await db.patient_management.findAll({
+        const data = await db.patientManagement.findAll({
             where: {
                 doctor_id: doctorId
             },
@@ -35,14 +35,15 @@ const getMyPatients = async (doctorId, searchInput) => {
 
 const getRequestList = async (doctorId) => {
     try {
-        const requests = await db.request_status.findAll({
+
+        const requests = await db.requestStatus.findAll({
             where: {
                 doctor_id: doctorId,
                 is_accepted: 0
             },
             include: [{
                 model: db.user,
-                attributes: ['email', 'name']
+                attributes: ['email', 'name', 'user_id']
             }]
         });
 
@@ -55,7 +56,7 @@ const getRequestList = async (doctorId) => {
 
 const cancelRequest = async (doctorId, userId) => {
     try {
-        const result = await db.request_status.destroy({
+        const result = await db.requestStatus.destroy({
             where: {
                 doctor_id: doctorId,
                 user_id: userId

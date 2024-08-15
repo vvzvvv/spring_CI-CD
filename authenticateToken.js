@@ -12,4 +12,15 @@ const authenticateToken = (token) => {
     return userId;
 }
 
-module.exports = authenticateToken;
+const authenticateTokenDoctor = (token) => {
+    console.log('authenticateTokenDoctor: ', token);
+    const decoded = jwt.verify(token, secretKey);
+    console.log('decoded: ', decoded);
+    const doctorId = decoded.doctorId;
+    //console.log(doctorId);
+    return doctorId;
+}
+
+module.exports = {
+    authenticateToken, authenticateTokenDoctor
+};

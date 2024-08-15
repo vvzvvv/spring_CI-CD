@@ -1,9 +1,15 @@
 const { postAddPatient } = require("../../models/addPatientQuery");
+const { authenticateTokenDoctor } = require('../../authenticateToken');
 
 module.exports = async (req, res) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    const doctorId = await authenticateTokenDoctor(token);
+
+    const { userId } = req.body;
+
     try {
-        const { userId } = req.body;
-        const doctorId = 1; // 임시 의사 ID (나중에 수정)
+
 
         const patients = await postAddPatient(doctorId, userId);
         

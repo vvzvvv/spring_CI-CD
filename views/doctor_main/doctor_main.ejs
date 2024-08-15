@@ -1,23 +1,37 @@
-<!--doctor_main-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/stylesheets/doctor_main.css" rel="stylesheet">
-    <title>의사 메인페이지</title>
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/menu.css" rel="stylesheet">
+    <title>Spring!</title>
+    <%-include('../header.ejs') %>
+    
 </head>
 <body>
+    <div class="menu">
+        <div class="logo">
+            <a class = "spring-logo-link" href="/">
+                <img src="/images/spring_logo.jpg"/>
+            </a>
+        </div>
+    </div>
+
     <div class="doctor_main-box">
         <div class="doctor_main-container">
             <div class="doctor_main-leftContainer1">
                 <div class="patientListText-container">
-                    <h3>나의 환자 목록</h3>
+                    <h1>나의 환자 목록</h1>
                 </div>
                 <div class="patitentListSearchButton-container">
-                    <%-include('./patientSearch.ejs') %>
-                    <%-include('./patientAddButton.ejs') %>
+                    <form method="get" action="#" role="search" style="display:inline" class="doctor_main-tab"> 
+                        <input type="search" placeholder="아이디를 입력하세요" id="patient-search">
+                        <button type="button" class="doctor_main-button" onclick="searchPatients()">검색</button>
+                    </form>
+                    <button type="button" class="doctor_main-button" onclick="openPopup()">환자 추가</button>
+                    <%-include('../doctor/popupAddPatient.ejs') %>
                 </div>
                 <div class="doctor_main-leftContainer2">
                     <div class="patientSearchList-container">
@@ -27,7 +41,7 @@
             </div>
             <div class="doctor_main-rightContainer1">
                 <div class="requestListText-container">
-                    <h3>요청 보낸 목록</h3>
+                    <h1>요청 보낸 목록</h1>
                 </div>    
                 <div class="doctor_main-rightContainer2">
                     <div class="requestList-container">
@@ -37,6 +51,6 @@
             </div>
         </div>
     </div>
-    <script src="/scripts/myPatients.js"></script>
+    <script src="/javascripts/myPatients.js"></script>
 </body>
-</html>
+</html> 

@@ -12,12 +12,13 @@
     background-color: white;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 2rem;
+    padding: 4rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     transition: visibility 0.3s, opacity 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
 }
 
 .patient-add {
@@ -28,7 +29,7 @@
 .add-title {
     display: flex;
     gap: 400px;
-
+    margin-bottom: 15px;
 }
 
 .add-title h1{
@@ -70,8 +71,11 @@
 table {
     width: 800px;
     font-size: 25px;
-    margin: 15px;
-
+    /* margin: 15px; */
+    border-collapse: collapse;
+    /* border-spacing: 10px;
+    width: 100%; */
+    table-layout: fixed;
 }
 
 th{
@@ -99,8 +103,6 @@ td {
     font-size: 22px;
     border-bottom: 1px solid #b8acac;
 }
-
-
 
 .waiting-button {
     background-color: #8E8EB2;
