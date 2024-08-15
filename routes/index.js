@@ -14,6 +14,8 @@ router.use('/prescription',require('./prescription'));
 router.use('/sleep',require('./sleep'));
 router.use('/mypage', require('./mypage'));
 
+router.use('/doctor',require('./doctor'));
+
 module.exports = router;
 
 
