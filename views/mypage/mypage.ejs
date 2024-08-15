@@ -21,7 +21,13 @@
             <hr class="hr1">
             <div class="connectDoc-block">
                 <a class="connectDoc-title">담당 의사 연결</a>
+            
                 <table class="table-block">
+                    <colgroup>
+                        <col style="width: 25%;"> 
+                        <col style="width: 25%;"> 
+                        <col style="width: 50%;"> 
+                    </colgroup>
                     <thead>
                         <tr class="list-head" scope="col">
                             <th class="name">이름</th>
@@ -31,9 +37,6 @@
                     </thead>
             
                     <tbody id="list-content-block">
-                        <tr class="list-content">
-                            
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -89,25 +92,161 @@
         const token = localStorage.getItem('token');
 
         if (token) {
-            getDoctorInfo(token);
-            getAgreementInfo(token);
+            await getDoctorInfo(token);
+            await getAgreementInfo(token);
         }
         else {
             console.log('Token does not exist in localStorage');
             window.location.href = '/user/login';
         }
+
+        const saveButton = document.querySelector('.save-range');
+        saveButton.addEventListener('click', async function() {
+            await putAgreementInfo(token);
+        });
     })
 
-    function getDoctorInfo(){
+    async function getDoctorInfo(token){
+        const response = await fetch('/mypage/managements', {
+            method: 'GET', // or 'GET'
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const infoList = await response.json();
+
+        const listContainer = document.getElementById('list-content-block');
+        infoList.forEach(doctor => {
+            const row = document.createElement('tr');
+            row.classList.add('list-content');
+
+            const nameCell = document.createElement('td');
+            nameCell.classList.add('management-td');
+            nameCell.textContent = doctor.doctor_name;
+            row.appendChild(nameCell);
+
+            const licenseCell = document.createElement('td');
+            licenseCell.classList.add('management-td');
+            licenseCell.textContent = doctor.doctor_license_number;
+            row.appendChild(licenseCell);
+
+            const acceptedCell = document.createElement('td');
+            acceptedCell.classList.add('button-td');
+            if(doctor.is_accepted == 0){
+                const acceptButton = document.createElement('button');
+                acceptButton.textContent = '동의';
+                acceptButton.classList.add('accept-button');
+                acceptButton.onclick = () => sendPutRequest(token, doctor.request_id, doctor.doctor_id, "toAccept");
+                
+                const refuseButton = document.createElement('button');
+                refuseButton.textContent = '거절';
+                refuseButton.classList.add('refuse-button');
+                refuseButton.onclick = () => sendPutRequest(token, doctor.request_id, doctor.doctor_id, "toRefuse");
+
+                acceptedCell.appendChild(acceptButton);
+                acceptedCell.appendChild(refuseButton);
+                row.appendChild(acceptedCell);
+                listContainer.appendChild(row);
+            }
+            else if (doctor.is_accepted == 2) {
+                const doneButton = document.createElement('button');
+                doneButton.textContent = '동의 완료';
+                doneButton.classList.add('done-button');
+                doneButton.disabled = true;
+
+                const linkButton = document.createElement('button');
+                linkButton.textContent = '연결 끊기';
+                linkButton.classList.add('disconnect-button');
+                linkButton.onclick = () => sendPutRequest(token, doctor.request_id, doctor.doctor_id, "toDelete");
+
+                acceptedCell.appendChild(doneButton);
+                acceptedCell.appendChild(linkButton);
+                row.appendChild(acceptedCell);
+                listContainer.appendChild(row);
+            }
+        });
 
     }
 
-    function getAgreementInfo(){
+    async function sendPutRequest(token, requestID, doctorID, newStatus) {
+        const response = await fetch('/mypage/managements', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                doctorID : doctorID,
+                requestID: requestID,
+                flag: newStatus,
+            })
+        });
 
+        if (!response.ok) {
+            alert(`Failed to update status for ${doctor.doctor_name}. Status: ${response.status}`);
+            return;
+        }
+
+        location.reload();  
     }
 
-    function passwordChange(){
+    async function getAgreementInfo(token){
+        const response = await fetch('/mypage/agreements', {
+            method: 'GET', // or 'GET'
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
+        const agreementList = await response.json();
+
+        document.querySelector('.medicine-check').checked = agreementList.medicine_agreement;
+        document.querySelector('.sleep-check').checked = agreementList.sleep_agreement;
+        document.querySelector('.exercise-check').checked = agreementList.exercise_agreement;
+        document.querySelector('.test-check').checked = agreementList.test_agreement;
+    }
+
+    async function putAgreementInfo(token){
+        const medicineAgreement = document.querySelector('.medicine-check').checked;
+        const sleepAgreement = document.querySelector('.sleep-check').checked;
+        const exerciseAgreement = document.querySelector('.exercise-check').checked;
+        const testAgreement = document.querySelector('.test-check').checked;
+
+        const requestData = {
+            medicine_agreement: medicineAgreement,
+            sleep_agreement: sleepAgreement,
+            exercise_agreement: exerciseAgreement,
+            test_agreement: testAgreement
+        };
+
+        try {
+            const response = await fetch('/mypage/agreements', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            alert("정보 공개 범위가 수정되었습니다");
+        } catch (error) {
+            console.error('Failed to save agreement info:', error);
+        }
     }
 
 </script>

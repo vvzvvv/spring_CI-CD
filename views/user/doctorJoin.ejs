@@ -11,7 +11,7 @@
     <a href="/user/join/patient" class = "join-non-selected-button left">환자</a>
     <a href="/user/join/doctor" class = "join-selected-button right">의사</a>
 
-      <form id="join-form" class="form">
+      <form id="join-form" class="form" enctype = "multipart/form-data">
         <div>
             <div class = "text">
                 <b>성명</b>
@@ -68,3 +68,74 @@
 
       </form>
   </div>
+  <script>
+    document.getElementById('check-email-button').addEventListener('click', async function() {
+      const email = document.querySelector('input[name="email"]').value;
+
+      if (!email) {
+        alert('이메일을 입력해주세요.');
+        return;
+      }
+      
+      try {
+        const response = await fetch('/user/join/emailChecking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+          alert(`${data.message}`);
+        }
+        else if (response.status === 404) {
+          const error = await response.json();
+          alert(`${error.message}`);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert(`${error.message}`);
+      }
+    });
+
+
+
+    document.getElementById('join-form').addEventListener('submit', async function(event) {
+      event.preventDefault();  // Prevent default form submission
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/user/join/doctor', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+          alert(`${data.message}`);
+          window.location.href = '/user/login';
+        }
+        else if (response.status === 400) {
+          const error = await response.json();
+          alert(`${error.message}`);
+        }
+        else if (response.status === 409) {
+          const error = await response.json();
+          alert(`${error.message}`);
+        }
+        else {
+          const error = await response.json();
+          alert(`${error.message}`);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert(`${error.message}`);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -65,7 +65,16 @@
                     const data = await response.json();
                     localStorage.setItem('token', data.token);  // 서버에서 받은 token이 브라우저에 저장됨
                     alert(`${data.message}`);
-                    window.location.href = '/';     // 홈으로 이동
+
+                    // 로그인한 사용자가 환자인 경우
+                    if (data.user == "patient") {
+                        window.location.href = '/mypage';     // 환자 마이페이지로 이동
+                    }
+
+                    // 로그인한 사용자가 의사인 경우
+                    if (data.user == "doctor") {
+                        window.location.href = '/';     // 의사계정 메인페이지로 이동
+                    }
                 }
                 else if (response.status === 404) {   // 존재하지 않는 사용자인 경우
                     const error = await response.json();

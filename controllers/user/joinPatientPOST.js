@@ -6,7 +6,7 @@ dotenv.config();
 
 const join = async (req, res) => {
     try {
-        const { email, password, passwordCheck} = req.body;
+        const { name, email, password, passwordCheck } = req.body;
 
         // 비밀번호 일치여부 검증 로직
         if (password !== passwordCheck) {
@@ -16,6 +16,7 @@ const join = async (req, res) => {
         // 새로운 사용자 회원가입
         else {
             const newUser = await db.user.create({
+                name: name,
                 email: email,
                 password: password
             });
