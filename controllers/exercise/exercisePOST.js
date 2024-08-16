@@ -1,5 +1,5 @@
 const db = require('../../models/index');
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 // 운동 기록 저장
 const saveExercise = async (req, res) => {

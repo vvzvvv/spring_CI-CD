@@ -13,6 +13,10 @@ const prescriptionReportDELETE =  require('../../controllers/prescription/prescr
 const chartGET = require('../../controllers/prescription/chartGET');
 const mainChartGET = require('../../controllers/prescription/mainChartGET');
 
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const secretKey = process.env.MY_SECRET;
+
 var router = express.Router();
 var userID = 0;
 
@@ -39,7 +43,9 @@ router.get('/refresh',async(req, res)=>{
     const authHeader = req.headers.authorization;
     if (authHeader) {
         const token = authHeader.split(' ')[1];
-        userID = await authenticateToken(token);
+        const decode = jwt.verify(token, secretKey);
+        
+        userID = decode.userId;
         res.status(200).send('Token authenticated');
     } else {
         res.status(401).send('Unauthorized');

@@ -1,5 +1,5 @@
 const diaryQuery = require('../../models/diaryQuery');
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     const { date } = req.params;

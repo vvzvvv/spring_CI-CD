@@ -1,5 +1,5 @@
 const {putAgreementList} = require("../../models/myPageQuery");
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();

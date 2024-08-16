@@ -1,5 +1,5 @@
 const boardQuery = require('../../models/boardQuery');
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     const { userID } = req.params;

@@ -1,7 +1,7 @@
 const diaryQuery = require('../../models/diaryQuery');
 const multer = require('multer');
 const multerGoogleStorage = require('multer-google-storage');
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 
 const upload = multer({

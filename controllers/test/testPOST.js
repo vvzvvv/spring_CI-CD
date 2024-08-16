@@ -1,7 +1,7 @@
 // const responseMessage = require("../../constants/responseMessage");
 // const statusCode = require("../../constants/statusCode");
 const {postTest} = require("../../models/testQuery");
-const authenticateToken = require("../../authenticateToken");
+const {authenticateToken} = require("../../authenticateToken");
 
 
 module.exports = async (req, res) => {

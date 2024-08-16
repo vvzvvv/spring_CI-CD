@@ -1,5 +1,5 @@
 const {postPrescriptionReport} = require("../../models/prescriptionQuery");
-const authenticateToken = require("../../authenticateToken");
+const {authenticateToken} = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     try {
