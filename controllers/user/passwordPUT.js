@@ -25,6 +25,7 @@ const changePassword = async function (req, res) {
         // 토큰으로부터 이메일 추출
         const decode = jwt.verify(token, secretKey);
         const email = decode.email;
+
         const user = decode.user;       // 환자인지 의사인지 구분
 
         console.log(email);

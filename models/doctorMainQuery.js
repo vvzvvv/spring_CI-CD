@@ -42,7 +42,7 @@ const getRequestList = async (doctorId) => {
             },
             include: [{
                 model: db.user,
-                attributes: ['email', 'name']
+                attributes: ['email', 'name', 'user_id']
             }]
         });
 

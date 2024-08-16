@@ -9,10 +9,9 @@
     <link href="/stylesheets/doctor_addPatient.css" rel="stylesheet">
 </head>
 <body>
-    <button onclick="openPopup()">환자 추가</button>
+    <!-- <button onclick="openPopup()">환자 추가</button> -->
 
     <div id="popup" class="popup">
-
 
         <div class="patient-add" id="prescription-list">
             <div class="exit-button">
@@ -30,7 +29,7 @@
             </div>
 
             <!-- 검색 결과 표시 테이블 -->
-            <table id="patientTable">
+            <table id="patientTable" class="add-table">
                 <thead>
                     <tr scope="col">
                         <th>환자 아이디</th>
@@ -59,15 +58,19 @@
 		var popup = document.getElementById("popup");
 		popup.style.visibility = "hidden";
 		popup.style.opacity = "0";
+        
+        window.location.href = '/doctor_main';
 	}
 
     function searchPatient() {
         const searchInput = document.getElementById('searchInput').value;
+        const token = localStorage.getItem('token');
 
         fetch(`doctor/searchPatient/${searchInput}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ searchInput }),
         })
@@ -99,10 +102,13 @@
     }
 
     function addPatient(patientId, button) {
+        const token = localStorage.getItem('token');
+        
         fetch(`/doctor/addPatient`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({ userId: patientId }),
         })

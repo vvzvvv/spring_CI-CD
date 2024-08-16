@@ -8,14 +8,14 @@ const openPatientPageGET = require('../../controllers/doctor_main/openPatientPag
 const getRequestListGET = require('../../controllers/doctor_main/requestListGET')
 const getAllPatientsGET = require('../../controllers/doctor_main/getAllPatientsGET');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('doctor_main/doctor_main', { title: 'doctor_main' });
+
+router.get('/', async (req, res)=>{
+  res.render('doctor_main/doctor_main');
 });
 
 // 새로운 라우트들 추가하기
 router.post('/searchMyPatients', searchMyPatientsPOST);
-router.get('/getRequestList/:doctorId', getRequestListGET);
+router.get('/getRequestList', getRequestListGET);
 router.post('/cancelRequest', cancelRequestPOST);
 router.get('/board/:userId', openPatientPageGET);
 router.get('/getAllPatients/:doctorId', getAllPatientsGET);

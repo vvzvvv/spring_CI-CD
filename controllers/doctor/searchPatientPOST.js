@@ -1,10 +1,14 @@
 const { getPatientSearch, getRequestStatus, getPatientManagement } = require("../../models/addPatientQuery");
+const { authenticateTokenDoctor } = require('../../authenticateToken');
 
 module.exports = async (req, res) => {
     try {
         const searchInput = req.params.searchInput;
-        const doctorId = 1; // 의사 아이디 (임시)
-        
+
+        const authHeader = req.headers.authorization;
+        const token = authHeader.split(' ')[1];
+        const doctorId = await authenticateTokenDoctor(token);
+
         const patients = await getPatientSearch(searchInput);
         
         const result = await Promise.all(patients.map(async (patient) => {
