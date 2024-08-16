@@ -18,6 +18,8 @@ const getManagementList = async (user_id) => {
             ],
         });
 
+        console.log("data: ", data);
+
         var result = [];
         data.forEach((info) => {
             result.push({
@@ -25,8 +27,8 @@ const getManagementList = async (user_id) => {
                 "doctor_id" : info.doctor_id,
                 "user_id" : info.user_id,
                 "is_accepted" : info.is_accepted,
-                "doctor_name" : info.doctor_name,
-                "doctor_license_number" : info.doctor_license_number,
+                "doctor_name" : info.doctor.name,
+                "doctor_license_number" : info.doctor.license_number,
             })
         })
 
