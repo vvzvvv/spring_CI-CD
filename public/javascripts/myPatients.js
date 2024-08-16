@@ -27,10 +27,26 @@ function searchPatients() {
     });
 }
 
-// 환자 마이페이지 열람 기능
-function viewPatient(userId) {
-    window.location.href = `/doctor_main/board/${userId}`;
-}
+//     const searchInput = document.getElementById('patient-search').value.toLowerCase();
+//     const patientTable = document.getElementById('patientSearchResults');
+//     const rows = patientTable.getElementsByTagName('tr');
+
+//     for (let i = 0; i < rows.length; i++) {
+//         const emailCell = rows[i].getElementsByTagName('td')[0];
+//         const nameCell = rows[i].getElementsByTagName('td')[1];
+
+//         if (emailCell || nameCell) {
+//             const emailText = emailCell.textContent.toLowerCase();
+//             const nameText = nameCell.textContent.toLowerCase();
+
+//             if (emailText.includes(searchInput) || nameText.includes(searchInput)) {
+//                 rows[i].style.display = ''; // 검색어와 일치하는 행을 표시
+//             } else {
+//                 rows[i].style.display = 'none'; // 검색어와 일치하지 않는 행을 숨김
+//             }
+//         }
+//     }
+// }
 
 // 요청 취소 기능
 function cancelRequest(doctorId, userId) {
@@ -54,6 +70,7 @@ function cancelRequest(doctorId, userId) {
     });
 }
 
+
 // 요청 보낸 목록 불러오기
 function loadRequestList(data) {
         const requestTable = document.getElementById('requestListResults');
@@ -72,7 +89,7 @@ function loadRequestList(data) {
    
 }
 
-//페이지 로드 시 요청 보낸 목록을 불러와용
+//페이지 로드 시 요청 보낸 목록을 불러옴
 document.addEventListener('DOMContentLoaded', async function() {
     const token = localStorage.getItem('token');
 
@@ -96,3 +113,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
 });
+
+// 환자 마이페이지 열람 기능
+function viewPatient(userId) {
+    window.location.href = `/doctor_main/board/${userId}`;
+}
+
+

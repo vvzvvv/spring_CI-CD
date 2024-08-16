@@ -35,7 +35,6 @@ const getMyPatients = async (doctorId, searchInput) => {
 
 const getRequestList = async (doctorId) => {
     try {
-
         const requests = await db.requestStatus.findAll({
             where: {
                 doctor_id: doctorId,

@@ -11,6 +11,7 @@ const prescriptionReportEDIT =  require('../../controllers/prescription/prescrip
 const prescriptionReportDELETE =  require('../../controllers/prescription/prescriptionReportDELETE');
 
 const chartGET = require('../../controllers/prescription/chartGET');
+const mainChartGET = require('../../controllers/prescription/mainChartGET');
 
 var router = express.Router();
 var userID = 0;
@@ -57,7 +58,7 @@ router.post('/report', prescriptionReportPOST);
 router.put('/reportEdit/:reportID', prescriptionReportEDIT);
 router.delete('/reportDelete/:reportID', prescriptionReportDELETE); 
 
-
+router.get('/chart/:userID', mainChartGET);
 
 module.exports = router;
 

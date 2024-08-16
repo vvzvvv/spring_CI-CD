@@ -6,6 +6,7 @@ const searchMyPatientsPOST = require('../../controllers/doctor_main/searchMyPati
 const cancelRequestPOST = require('../../controllers/doctor_main/cancelRequestPOST');
 const openPatientPageGET = require('../../controllers/doctor_main/openPatientPageGET');
 const getRequestListGET = require('../../controllers/doctor_main/requestListGET')
+const getAllPatientsGET = require('../../controllers/doctor_main/getAllPatientsGET');
 
 
 router.get('/', async (req, res)=>{
@@ -17,5 +18,6 @@ router.post('/searchMyPatients', searchMyPatientsPOST);
 router.get('/getRequestList', getRequestListGET);
 router.post('/cancelRequest', cancelRequestPOST);
 router.get('/board/:userId', openPatientPageGET);
+router.get('/getAllPatients/:doctorId', getAllPatientsGET);
 
 module.exports = router;

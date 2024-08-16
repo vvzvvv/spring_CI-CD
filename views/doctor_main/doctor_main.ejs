@@ -52,5 +52,29 @@
         </div>
     </div>
     <script src="/javascripts/myPatients.js"></script>
+    
+    <!--페이지 로드 시 나의 전체 환자 목록을 가져옴-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/doctor_main/getAllPatients/1')  // doctorId를 적절히 넣어주세요.
+            .then(response => response.json())
+            .then(data => {
+                const patientTable = document.getElementById('patientSearchResults');
+                patientTable.innerHTML = ''; // 기존 내용을 초기화
+
+                data.forEach(patient => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${patient.email}</td>
+                        <td>${patient.name}</td>
+                        <td><button type="button" class="doctor_main-button" onclick="viewPatient('${patient.userId}')">열람</button></td>
+                    `;
+                    patientTable.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching all patients:', error));
+        });
+    </script>
+
 </body>
 </html> 
