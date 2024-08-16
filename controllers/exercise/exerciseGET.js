@@ -1,5 +1,5 @@
 const { getExerciseByDate } = require('../../models/exerciseQuery');
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 module.exports =async (req, res) => {
     try {

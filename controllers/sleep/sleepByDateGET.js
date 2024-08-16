@@ -1,5 +1,5 @@
 const { getSleepReportByDate } = require('../../models/sleepQuery');
-const authenticateToken = require("../../authenticateToken");
+const { authenticateToken } = require("../../authenticateToken");
 
 module.exports = async (req, res) => {
     try {
