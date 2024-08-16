@@ -56,7 +56,15 @@
     <!--페이지 로드 시 나의 전체 환자 목록을 가져옴-->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('/doctor_main/getAllPatients/1')  // doctorId를 적절히 넣어주세요.
+            const token = localStorage.getItem('token');
+            
+            fetch('/doctor_main/getAllPatients', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                }
+            })  
             .then(response => response.json())
             .then(data => {
                 const patientTable = document.getElementById('patientSearchResults');
@@ -65,9 +73,9 @@
                 data.forEach(patient => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${patient.email}</td>
-                        <td>${patient.name}</td>
-                        <td><button type="button" class="doctor_main-button" onclick="viewPatient('${patient.userId}')">열람</button></td>
+                        <td>${patient.user.email}</td>
+                        <td>${patient.user.name}</td>
+                        <td><button type="button" class="doctor_main-button" onclick="viewPatient('${patient.user_id}')">열람</button></td>
                     `;
                     patientTable.appendChild(row);
                 });

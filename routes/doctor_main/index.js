@@ -18,6 +18,6 @@ router.post('/searchMyPatients', searchMyPatientsPOST);
 router.get('/getRequestList', getRequestListGET);
 router.post('/cancelRequest', cancelRequestPOST);
 router.get('/board/:userId', openPatientPageGET);
-router.get('/getAllPatients/:doctorId', getAllPatientsGET);
+router.get('/getAllPatients', getAllPatientsGET);
 
 module.exports = router;

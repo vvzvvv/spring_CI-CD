@@ -1,8 +1,12 @@
 const { getMyPatients } = require('../../models/doctorMainQuery');
+const { authenticateTokenDoctor } = require('../../authenticateToken');
 
 module.exports = async (req, res) => {
     try {
-        const doctorId = req.params.doctorId; 
+        const authHeader = req.headers.authorization;
+        const token = authHeader.split(' ')[1];
+        const doctorId = await authenticateTokenDoctor(token);
+
         const patients = await getMyPatients(doctorId, '');
 
         res.json(patients);
