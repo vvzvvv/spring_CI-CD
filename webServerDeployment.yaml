@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: spring
-          image: senzoo/spring:latest
+          image: ohohohoh/spring:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
