@@ -15,7 +15,7 @@ pipeline {
     stage("build image") {
       steps {
         script {
-          spring = docker.build("senzoo/spring:${env.BUILD_ID}")
+          spring = docker.build("ohohohoh/spring:${env.BUILD_ID}")
         }
       }
     }
